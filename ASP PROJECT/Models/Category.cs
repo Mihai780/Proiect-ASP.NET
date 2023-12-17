@@ -8,7 +8,10 @@ namespace ASP_PROJECT.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Numele categoriei este obligatoriu")]
-        public string Name { get; set; }
+        public string CategoryName { get; set; }
+
+        [MaxLength(20, ErrorMessage = "Descrierea nu trebuie sa depaseasca 20 de caractere")]
+        public string Description { get; set; }
 
         // o colectie este creata de catre un user
         //public string? UserId { get; set; }
