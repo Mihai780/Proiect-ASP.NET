@@ -21,5 +21,8 @@ namespace ASP_PROJECT.Models
         public virtual ICollection<Comment>? Comments { get; set; }
         
         public virtual ICollection<BookmarkCategory>? BookmarkCategories { get; set; }
+        public string? UserId { get; set; }
+        public virtual ApplicationUser? User { get; set; }
+
     }
 }

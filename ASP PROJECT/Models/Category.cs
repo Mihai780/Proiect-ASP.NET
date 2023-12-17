@@ -19,5 +19,7 @@ namespace ASP_PROJECT.Models
 
         // relatia many-to-many dintre Article si Bookmark
         public virtual ICollection<BookmarkCategory>? BookmarkCategories { get; set; }
+        public string? UserId { get; set; }
+        public virtual ApplicationUser? User { get; set; }
     }
 }
