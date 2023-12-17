@@ -101,5 +101,19 @@ namespace ASP_PROJECT.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        private void SetAccessRights()
+        {
+            ViewBag.AfisareButoane = false;
+
+            if (User.IsInRole("User"))
+            {
+                ViewBag.AfisareButoane = true;
+            }
+
+            ViewBag.EsteAdmin = User.IsInRole("Admin");
+
+            ViewBag.UserCurent = _userManager.GetUserId(User);
+        }
     }
 }

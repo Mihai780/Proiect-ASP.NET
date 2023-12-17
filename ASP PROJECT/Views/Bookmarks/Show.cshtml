@@ -26,15 +26,17 @@
     <hr />
 
     <div class="d-flex flex-row justify-content-between">
+        @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+        {
 
-        <a class="btn btn-success" href="/Bookmarks/Edit/@ViewBag.Bookmark.Id">Editeaza bookmark</a>
+            <a class="btn btn-success" href="/Bookmarks/Edit/@ViewBag.Bookmark.Id">Editeaza bookmark</a>
 
-        <form method="post" action="/Bookmarks/Delete/@ViewBag.Bookmark.Id">
+            <form method="post" action="/Bookmarks/Delete/@ViewBag.Bookmark.Id">
 
             <button class="btn btn-danger" type="submit">Sterge bookmark</button>
 
         </form>
-
+        }
     </div>
 
 </div>

@@ -1,6 +1,7 @@
 ﻿using ASP_PROJECT.Data;
 using ASP_PROJECT.Models;
 using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,10 +30,9 @@ namespace ASP_PROJECT.Controllers
             _roleManager = roleManager;
         }
 
-
         public IActionResult Index()
         {
-            var bookmarks = db.Bookmarks;
+            var bookmarks = db.Bookmarks.Include("User");
 
             ViewBag.Bookmarks = bookmarks;
 
@@ -41,9 +41,18 @@ namespace ASP_PROJECT.Controllers
 
         public IActionResult Show(int id)
         {
-            Bookmark bookmark = db.Bookmarks.Include("Comments").Where(bok => bok.Id == id).First();
+            Bookmark bookmark = db.Bookmarks.Include("User").Include("Comments").Include("Comments.User")
+                                .Where(bok => bok.Id == id).First();
 
             ViewBag.Bookmark = bookmark;
+
+            SetAccessRights();
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+                ViewBag.Alert = TempData["messageType"];
+            }
 
             return View();
         }
@@ -62,7 +71,7 @@ namespace ASP_PROJECT.Controllers
         {
             try
             {
-
+                bookmark.UserId = _userManager.GetUserId(User);
                 bookmark.Date = DateTime.Now;
                 db.Bookmarks.Add(bookmark);
                 db.SaveChanges();
@@ -91,33 +100,72 @@ namespace ASP_PROJECT.Controllers
         {
             Bookmark bookmark = db.Bookmarks.Find(id);
 
-            try
+            if (bookmark.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
+                try
+                {
 
-                bookmark.Title = requestBookmark.Title;
-                bookmark.Description = requestBookmark.Description;
-                bookmark.Content = requestBookmark.Content;
-                db.SaveChanges();
-                TempData["message"] = "Bookmarkul a fost modificat";
+                    bookmark.Title = requestBookmark.Title;
+                    bookmark.Description = requestBookmark.Description;
+                    bookmark.Content = requestBookmark.Content;
+                    db.SaveChanges();
+                    TempData["message"] = "Bookmarkul a fost modificat";
+                    return RedirectToAction("Index");
+                }
+
+                catch (Exception)
+                {
+                    requestBookmark.Categ = GetUserCategories();
+                    return RedirectToAction("Edit", id);
+
+                }
+            }
+
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui articol care nu va apartine";
+                TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Index");
             }
 
-            catch (Exception)
-            {
-                requestBookmark.Categ = GetUserCategories();
-                return RedirectToAction("Edit", id);
-
-            }
         }
 
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            Bookmark article = db.Bookmarks.Find(id);
-            db.Bookmarks.Remove(article);
-            db.SaveChanges();
-            TempData["message"] = "Bookmarul a fost sters";
-            return RedirectToAction("Index");
+            Bookmark bookmark = db.Bookmarks.Find(id);
+
+            if (bookmark.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
+            {
+                db.Bookmarks.Remove(bookmark);
+                db.SaveChanges();
+                TempData["message"] = "Bookmarul a fost sters";
+                TempData["messageType"] = "alert-success";
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa stergeti un articol care nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+            
+            
+        }
+
+        private void SetAccessRights()
+        {
+            ViewBag.AfisareButoane = false;
+
+            if (User.IsInRole("User"))
+            {
+                ViewBag.AfisareButoane = true;
+            }
+
+            ViewBag.EsteAdmin = User.IsInRole("Admin");
+
+            ViewBag.UserCurent = _userManager.GetUserId(User);
         }
 
         [NonAction]
@@ -129,7 +177,6 @@ namespace ASP_PROJECT.Controllers
             // extragem toate categoriile din baza de date
             var categories = from cat in db.Categories
                              select cat;
-
             // iteram prin categorii
             foreach (var category in categories)
             {
