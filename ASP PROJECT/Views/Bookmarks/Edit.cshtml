@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Edit";
+}
+
+
+<form method="post" action="/Bookmarks/Edit/@ViewBag.Bookmark.Id">
+
+    <label>Titlu bookmark</label>
+    <input type="text" name="Title" value="@ViewBag.Bookmark.Title" />
+    <br /><br />
+
+    <label>Descriere bookmark</label>
+    <input type="text" name="Description" value="@ViewBag.Bookmark.Description" />
+    <br /><br />
+
+    <label>Continut bookmark</label>
+    <input type="text" name="Content" value="@ViewBag.Bookmark.Content" />
+    <br /><br />
+
+    <button class="btn btn-success" type="submit">Modifica bookmark</button>
+
+</form>
+
+

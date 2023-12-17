@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-ASP_PROJECT-348ea6f2-1cb6-4e10-82a8-ff577bb80a69</UserSecretsId>
+    <UserSecretsId>aspnet-ASP_PROJECT-46b398f5-b252-40bb-a814-1fb8599fae59</UserSecretsId>
     <RootNamespace>ASP_PROJECT</RootNamespace>
   </PropertyGroup>
 

@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "New";
+}
+
+<h2>Adaugare bookmark</h2>
+<br />
+
+<form method="post" action="/Bookmarks/New">
+
+    <label>Titlu bookmark</label>
+    <input type="text" name="Title" />
+    <br />
+    <br />
+
+    <label>Descriere bookmark</label>
+    <textarea name="Description"></textarea>
+    <br />
+    <br />
+
+    <label>Continut bookmark</label>
+    <textarea name="Content"></textarea>
+    <br />
+    <br />
+
+
+    <button class="btn btn-success" type="submit">Adauga bookmark</button>
+
+</form>
+
+

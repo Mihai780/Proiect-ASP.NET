@@ -2459,11 +2459,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\ASP PROJECT.csproj",
+      "projectUniqueName": "C:\\Users\\mihai\\OneDrive\\Desktop\\ASP PROJECT\\ASP PROJECT.csproj",
       "projectName": "ASP PROJECT",
-      "projectPath": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\ASP PROJECT.csproj",
+      "projectPath": "C:\\Users\\mihai\\OneDrive\\Desktop\\ASP PROJECT\\ASP PROJECT.csproj",
       "packagesPath": "C:\\Users\\mihai\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\obj\\",
+      "outputPath": "C:\\Users\\mihai\\OneDrive\\Desktop\\ASP PROJECT\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mihai\\AppData\\Roaming\\NuGet\\NuGet.Config",

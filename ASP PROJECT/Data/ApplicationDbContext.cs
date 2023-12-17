@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using ASP_PROJECT.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP_PROJECT.Data
@@ -9,5 +10,9 @@ namespace ASP_PROJECT.Data
             : base(options)
         {
         }
+        public DbSet<Bookmark> Bookmarks { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
     }
 }

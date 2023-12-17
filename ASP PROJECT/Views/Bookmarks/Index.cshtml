@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Afisare bookmarks</h2>
+<br />
+
+<div class="d-flex justify-content-center">
+
+    <a class="btn btn-outline-success" href="/Bookmarks/New">Adauga bookmark</a>
+    <br />
+
+</div>
+
+<br />
+
+
+@foreach (var bookmark in ViewBag.Bookmarks)
+{
+    <div class="card">
+
+        <div class="card-body">
+
+            <h3 class="card-title alert-success py-3 px-3 rounded-2">@bookmark.Title</h3>
+
+            <div class="card-text">@bookmark.Content</div>
+
+            <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">Afisare articol</a>
+
+            <span class="alert-success px-1 align-content-center">@bookmark.Date</span>
+
+        </div>
+
+    </div>
+
+    <br />
+    <br />
+}
+
+

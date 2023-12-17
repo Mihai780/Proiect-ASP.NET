@@ -1,0 +1,129 @@
+﻿
+<div class="d-flex justify-content-center">
+
+    <a class="btn btn-outline-success" href="/Bookmarks/Index/">Afisare bookmarks</a>
+
+    <a class="btn btn-outline-success" href="/Bookmarks/New">Adauga bookmark</a>
+
+</div>
+
+<br />
+
+<div class="card">
+
+    <div class="card-body">
+
+        <h3 class="card-title alert-success py-3 px-3 rounded-2">@ViewBag.Bookmark.Title</h3>
+
+        <div class="card-text">@ViewBag.Bookmark.Description</div>
+
+        <div class="card-text">@ViewBag.Bookmark.Content</div>
+
+        <div class="alert-success">@ViewBag.Bookmark.Date</div>
+
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-between">
+
+        <a class="btn btn-success" href="/Bookmarks/Edit/@ViewBag.Bookmark.Id">Editeaza bookmark</a>
+
+        <form method="post" action="/Bookmarks/Delete/@ViewBag.Bookmark.Id">
+
+            <button class="btn btn-danger" type="submit">Sterge bookmark</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<br />
+<br />
+
+@foreach (var comm in ViewBag.Bookmark.Comments)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-8">
+
+                <div>
+
+                    <p>@comm.Content</p>
+                    <small>@comm.Date</small>
+
+                </div>
+                <br>
+
+                <div class="d-flex">
+
+                    <div>
+
+                        <a class="btn btn-outline-primary" href="/Comments/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                    </div>
+
+                    <div>
+
+                        <form method="post" action="/Comments/Delete/@comm.Id">
+
+                            <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div>
+}
+
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card">
+
+                <form method="post" action="/Comments/New">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="ArticleId" value="@ViewBag.Bookmark.Id" />
+
+                        <label>Continut comentariu</label>
+                        <br />
+
+                        <textarea class="form-control" name="Content"></textarea>
+                        <br />
+
+                        <button class="btn btn-success " type="submit">Adauga comentariul</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>
