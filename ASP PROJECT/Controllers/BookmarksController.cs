@@ -45,6 +45,7 @@ namespace ASP_PROJECT.Controllers
                 bookmark.Date = DateTime.Now;
                 db.Bookmarks.Add(bookmark);
                 db.SaveChanges();
+                TempData["message"] = "Bookmarkul a fost adaugat";
                 return RedirectToAction("Index"); 
             }
 
@@ -75,7 +76,7 @@ namespace ASP_PROJECT.Controllers
                 bookmark.Description = requestBookmark.Description;
                 bookmark.Content = requestBookmark.Content;
                 db.SaveChanges();
-
+                TempData["message"] = "Bookmarkul a fost modificat";
                 return RedirectToAction("Index");
             }
 
@@ -92,6 +93,7 @@ namespace ASP_PROJECT.Controllers
             Bookmark article = db.Bookmarks.Find(id);
             db.Bookmarks.Remove(article);
             db.SaveChanges();
+            TempData["message"] = "Bookmarul a fost sters";
             return RedirectToAction("Index");
         }
     }

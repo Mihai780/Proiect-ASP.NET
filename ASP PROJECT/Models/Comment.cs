@@ -12,8 +12,8 @@ namespace ASP_PROJECT.Models
 
             public DateTime Date { get; set; }
 
-            public int BookmarkId { get; set; }
+            public int? BookmarkId { get; set; }
 
-            public virtual Bookmark Bookmark { get; set; }
+            public virtual Bookmark? Bookmark { get; set; }
         }
 }
