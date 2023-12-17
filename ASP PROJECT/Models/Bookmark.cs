@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ASP_PROJECT.Models
 {
@@ -12,8 +14,12 @@ namespace ASP_PROJECT.Models
         public string Content { get; set; }
         public DateTime Date { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        public int? CategoryId { get; set; }
+
+        [NotMapped]
+        public IEnumerable<SelectListItem>? Categ { get; set; }
+        public virtual ICollection<Comment>? Comments { get; set; }
         
-        public virtual ICollection<BookmarkCategory> BookmarkCategories { get; set; }
+        public virtual ICollection<BookmarkCategory>? BookmarkCategories { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using ASP_PROJECT.Data;
 using ASP_PROJECT.Models;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP_PROJECT.Controllers
@@ -33,8 +35,12 @@ namespace ASP_PROJECT.Controllers
         }
 
         public IActionResult New()
-        { 
-            return View();
+        {
+            Bookmark bm = new Bookmark();
+
+            bm.Categ = GetUserCategories();
+
+            return View(bm);
         }
 
         [HttpPost]
@@ -42,6 +48,7 @@ namespace ASP_PROJECT.Controllers
         {
             try
             {
+
                 bookmark.Date = DateTime.Now;
                 db.Bookmarks.Add(bookmark);
                 db.SaveChanges();
@@ -51,6 +58,7 @@ namespace ASP_PROJECT.Controllers
 
             catch (Exception)
             {
+                bookmark.Categ = GetUserCategories();
                 return RedirectToAction("New");
             }
         }
@@ -59,9 +67,9 @@ namespace ASP_PROJECT.Controllers
         {
             Bookmark bookmark = db.Bookmarks.Where(bok => bok.Id==id).First();
 
-            ViewBag.Bookmark = bookmark;
+            bookmark.Categ = GetUserCategories();
 
-            return View();
+            return View(bookmark);
         }
 
         [HttpPost]
@@ -82,6 +90,7 @@ namespace ASP_PROJECT.Controllers
 
             catch (Exception)
             {
+                requestBookmark.Categ = GetUserCategories();
                 return RedirectToAction("Edit", id);
 
             }
@@ -95,6 +104,30 @@ namespace ASP_PROJECT.Controllers
             db.SaveChanges();
             TempData["message"] = "Bookmarul a fost sters";
             return RedirectToAction("Index");
+        }
+
+        [NonAction]
+        public IEnumerable<SelectListItem> GetUserCategories()
+        {
+            // generam o lista de tipul SelectListItem fara elemente
+            var selectList = new List<SelectListItem>();
+
+            // extragem toate categoriile din baza de date
+            var categories = from cat in db.Categories
+                             select cat;
+
+            // iteram prin categorii
+            foreach (var category in categories)
+            {
+                // adaugam in lista elementele necesare pentru dropdown
+                // id-ul categoriei si denumirea acesteia
+                selectList.Add(new SelectListItem
+                {
+                    Value = category.Id.ToString(),
+                    Text = category.CategoryName.ToString()
+                });
+            }
+            return selectList;
         }
     }
 }

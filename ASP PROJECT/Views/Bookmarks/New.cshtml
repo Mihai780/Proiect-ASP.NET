@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ASP_PROJECT.Models.Bookmark
+
+@{
     ViewBag.Title = "New";
 }
 
@@ -21,6 +23,10 @@
     <br />
     @Html.TextArea("Content",null,new{@class="form-control"})
     <br /><br />
+
+   <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+    "Selectati categoria", new { @class = "form-control" })
 
     <button class="btn btn-success" type="submit">Adauga bookmark</button>
 
