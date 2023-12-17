@@ -4,6 +4,7 @@ using ASP_PROJECT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASP_PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231217135326_Edi_DB")]
+    partial class Edi_DB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,49 +50,6 @@ namespace ASP_PROJECT.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Bookmarks");
-                });
-
-            modelBuilder.Entity("ASP_PROJECT.Models.BookmarkCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("BookmarkId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("BookmarkDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id", "BookmarkId", "CategoryId");
-
-                    b.HasIndex("BookmarkId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("BookmarkCategories");
-                });
-
-            modelBuilder.Entity("ASP_PROJECT.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ASP_PROJECT.Models.Comment", b =>
@@ -320,25 +279,6 @@ namespace ASP_PROJECT.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ASP_PROJECT.Models.BookmarkCategory", b =>
-                {
-                    b.HasOne("ASP_PROJECT.Models.Bookmark", "Bookmark")
-                        .WithMany("BookmarkCategories")
-                        .HasForeignKey("BookmarkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ASP_PROJECT.Models.Category", "Category")
-                        .WithMany("BookmarkCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bookmark");
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("ASP_PROJECT.Models.Comment", b =>
                 {
                     b.HasOne("ASP_PROJECT.Models.Bookmark", "Bookmark")
@@ -401,14 +341,7 @@ namespace ASP_PROJECT.Data.Migrations
 
             modelBuilder.Entity("ASP_PROJECT.Models.Bookmark", b =>
                 {
-                    b.Navigation("BookmarkCategories");
-
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("ASP_PROJECT.Models.Category", b =>
-                {
-                    b.Navigation("BookmarkCategories");
                 });
 #pragma warning restore 612, 618
         }

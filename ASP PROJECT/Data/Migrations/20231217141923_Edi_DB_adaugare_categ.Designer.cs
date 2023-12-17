@@ -4,6 +4,7 @@ using ASP_PROJECT.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASP_PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231217141923_Edi_DB_adaugare_categ")]
+    partial class Edi_DB_adaugare_categ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,22 +60,22 @@ namespace ASP_PROJECT.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("BookmarkDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("BookmarkId")
                         .HasColumnType("int");
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("BookmarkDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id", "BookmarkId", "CategoryId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BookmarkId");
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookmarkCategories");
+                    b.ToTable("BookmarkCategory");
                 });
 
             modelBuilder.Entity("ASP_PROJECT.Models.Category", b =>
@@ -90,7 +92,7 @@ namespace ASP_PROJECT.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("ASP_PROJECT.Models.Comment", b =>
@@ -324,15 +326,11 @@ namespace ASP_PROJECT.Data.Migrations
                 {
                     b.HasOne("ASP_PROJECT.Models.Bookmark", "Bookmark")
                         .WithMany("BookmarkCategories")
-                        .HasForeignKey("BookmarkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookmarkId");
 
                     b.HasOne("ASP_PROJECT.Models.Category", "Category")
                         .WithMany("BookmarkCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.Navigation("Bookmark");
 

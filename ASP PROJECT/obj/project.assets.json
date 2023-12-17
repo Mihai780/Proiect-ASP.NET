@@ -2454,19 +2454,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mihai\\.nuget\\packages\\": {}
+    "C:\\Users\\eduar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\ASP PROJECT.csproj",
+      "projectUniqueName": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\ASP PROJECT.csproj",
       "projectName": "ASP PROJECT",
-      "projectPath": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\ASP PROJECT.csproj",
-      "packagesPath": "C:\\Users\\mihai\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\obj\\",
+      "projectPath": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\ASP PROJECT.csproj",
+      "packagesPath": "C:\\Users\\eduar\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP PROJECT\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\mihai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\eduar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2532,7 +2532,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.414\\RuntimeIdentifierGraph.json"
       }
     }
   }

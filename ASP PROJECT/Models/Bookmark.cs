@@ -13,5 +13,7 @@ namespace ASP_PROJECT.Models
         public DateTime Date { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+        
+        public virtual ICollection<BookmarkCategory> BookmarkCategories { get; set; }
     }
 }
