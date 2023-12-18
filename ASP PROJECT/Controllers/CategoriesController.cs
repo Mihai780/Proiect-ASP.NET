@@ -1,7 +1,9 @@
 ﻿using ASP_PROJECT.Data;
 using ASP_PROJECT.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 //REMINDER: Din ultima cerinta deducem ca adminul NU STERGE CATEGORIILE USERILOR
 namespace ASP_PROJECT.Controllers
@@ -26,6 +28,8 @@ namespace ASP_PROJECT.Controllers
 
             _roleManager = roleManager;
         }
+
+        [Authorize(Roles ="User,Admin")]
         public IActionResult Index()
         {
 
@@ -34,31 +38,62 @@ namespace ASP_PROJECT.Controllers
                 ViewBag.message = TempData["message"].ToString();
             }
 
-            var categories = from category in db.Categories
-                             orderby category.CategoryName
-                             select category;
-            ViewBag.Categories = categories;
+            if (User.IsInRole("Admin"))
+            {
+                var categories = from category in db.Categories
+                                 orderby category.CategoryName
+                                 select category;
+                ViewBag.Categories = categories;
+               
+            }
+            else if (User.IsInRole("User"))
+            {
+                var categories = from category in db.Categories
+                                 where category.UserId == _userManager.GetUserId(User)
+                                 orderby category.CategoryName
+                                 select category;
+                ViewBag.Categories = categories;
+                
+            }
             return View();
-        }
-        public ActionResult Show(int id)
-        {
-            Category category = db.Categories.Find(id);
-            return View(category);
+            
         }
 
-        public ActionResult New()
+        [Authorize(Roles = "User,Admin")]
+        public IActionResult Show(int id)
+        {
+            Category category = db.Categories.Find(id);
+            if (User.IsInRole("Admin") || category.UserId==_userManager.GetUserId(User))
+            {
+                var categories = db.Categories.Include("User").Include("BookmarkCategories").FirstOrDefault();
+                SetAccessRights();
+
+                return View(categories);
+            }
+            else 
+            {
+                TempData["message"] = "Categoria pe care ati incercat sa o accesati nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return Redirect("/Bookmarks/Index");
+            }
+        }
+
+        [Authorize(Roles = "User,Admin")]
+        public IActionResult New()
         { 
             return View();
         }
 
         [HttpPost]
-        public ActionResult New(Category cat)
+        public IActionResult New(Category cat)
         {
             if (ModelState.IsValid)
             {
+                cat.UserId=_userManager.GetUserId(User);
                 db.Categories.Add(cat);
                 db.SaveChanges();
                 TempData["message"] = "Categoria a fost adaugata";
+                TempData["messageType"] = "alert-success";
                 return RedirectToAction("Index");
             }
 
@@ -67,39 +102,81 @@ namespace ASP_PROJECT.Controllers
                 return View(cat);
             }
         }
-        public ActionResult Edit(int id)
+
+        [Authorize(Roles = "User,Admin")]
+        public IActionResult Edit(int id)
         {
+            
             Category category = db.Categories.Find(id);
-            return View(category);
+            if (category.UserId==_userManager.GetUserId(User) || User.IsInRole("Admin"))
+            {
+                return View(category);
+            }
+            else
+            {
+                TempData["message"] = "Categoria pe care ati incercat sa o editati nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+            
         }
 
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
-        public ActionResult Edit(int id, Category requestCategory)
+        public IActionResult Edit(int id, Category requestCategory)
         {
             Category category = db.Categories.Find(id);
-
-            if (ModelState.IsValid)
+            if (category.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
+                if (ModelState.IsValid)
+                {
 
-                category.CategoryName = requestCategory.CategoryName;
+                    category.CategoryName = requestCategory.CategoryName;
+                    category.Description = requestCategory.Description;
+                    db.SaveChanges();
+                    TempData["message"] = "Categoria a fost modificata!";
+                    TempData["messageType"] = "alert-success";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View(requestCategory);
+                }
+            }         
+            else
+            {
+                TempData["message"] = "Categoria pe care ati incercat sa o editati nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorize(Roles = "User,Admin")]
+        [HttpPost]
+        
+        public IActionResult Delete(int id)
+        {
+            Category category = db.Categories.Find(id);
+            if (category.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
+            {
+                if (category.BookmarkCategories.Count>0)
+                {
+                    foreach (var bmcat in category.BookmarkCategories)
+                        db.BookmarkCategories.Remove(bmcat);
+                }
+                db.Categories.Remove(category);
+                TempData["message"] = "Categoria a fost stearsa";
+                TempData["messageType"] = "alert-success";
                 db.SaveChanges();
-                TempData["message"] = "Categoria a fost modificata!";
                 return RedirectToAction("Index");
             }
             else
             {
-                return View(requestCategory);
+                TempData["message"] = "Categoria pe care ati incercat sa o stergeti nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
             }
-        }
-
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            Category category = db.Categories.Find(id);
-            db.Categories.Remove(category);
-            TempData["message"] = "Categoria a fost stearsa";
-            db.SaveChanges();
-            return RedirectToAction("Index");
+                
         }
 
         private void SetAccessRights()

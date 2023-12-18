@@ -1,5 +1,48 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model ASP_PROJECT.Models.Category
 @{
+    ViewBag.Title = "Afisare categorie";
 }
+
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+
+@if (ViewBag.EsteAdmin)
+{
+    <i class="bi bi-person"> Creat de: </i> @Model.User.UserName
+
+}
+
+<p>@Model.CategoryName</p>
+
+<p>@Model.Description</p>
+
+
+<form method="post" action="/Categories/Delete/@Model.Id">
+
+    <button class="btn btn-danger" type="submit">Sterge categoria</button>
+
+</form>
+<br />
+<a class="btn alert-success" href="/Categories/Index/">Afisare lista categorii</a>
+
+@if (Model.BookmarkCategories.Count>0)
+@foreach (var bookmarkcat in Model.BookmarkCategories)
+{
+        <div class="col-12">
+            <div class="card" style="width: 100%;">
+                @*<img src="..." class="card-img-top" alt="..."> *@
+
+                <div class="card-body">
+
+                    @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
+
+                </div>
+            </div>
+        </div>
+}
+
+<br />
+<hr />
+<br />

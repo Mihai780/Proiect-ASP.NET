@@ -1,4 +1,6 @@
-﻿@if (ViewBag.Message != null)
+﻿@model ASP_PROJECT.Models.Bookmark
+
+@if (ViewBag.Message != null)
 {
 
     <h2 class="alert-success p-3 rounded-3 text-center mb-5">@ViewBag.Message</h2>
@@ -14,24 +16,11 @@
 <br />
 
 
-@foreach (var bookmark in ViewBag.Bookmarks)
+@foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.Bookmarks)
 {
     <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">
-    <div class="card">
 
-        <div class="card-body">
-
-            <h3 class="card-title alert-success py-3 px-3 rounded-2">@bookmark.Title</h3>
-
-            <div class="card-text">@bookmark.Content</div>
-
-            @*<div><i class="bi bi-person"></i> @Model.User.UserName</div>*@
-
-            <span class="alert-success px-1 align-content-center">@bookmark.Date</span>
-
-        </div>
-
-    </div>
+    @Html.Partial("BookmarkInfo",bookmark)
 
     <br />
     <br />

@@ -1,6 +1,5 @@
 ﻿using ASP_PROJECT.Data;
 using ASP_PROJECT.Models;
-using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,9 +40,12 @@ namespace ASP_PROJECT.Controllers
 
         public IActionResult Show(int id)
         {
-            Bookmark bookmark = db.Bookmarks.Include("User").Include("Comments").Include("Comments.User").Where(bok => bok.Id == id).First();
+            Bookmark bookmark = db.Bookmarks.Include("User")
+                                .Include("Comments")
+                                .Include("Comments.User")
+                                .Where(bok => bok.Id == id)
+                                .First();
 
-            ViewBag.Bookmark = bookmark;
 
             SetAccessRights();
 
@@ -53,9 +55,39 @@ namespace ASP_PROJECT.Controllers
                 ViewBag.Alert = TempData["messageType"];
             }
 
-            return View();
+            return View(bookmark);
         }
 
+        [HttpPost]
+        [Authorize(Roles ="User,Admin")]
+        public IActionResult Show([FromForm] Comment comm)
+        {
+            comm.Date = DateTime.Now;
+            comm.UserId = _userManager.GetUserId(User);
+
+            if(ModelState.IsValid)
+            {
+                db.Comments.Add(comm);
+                db.SaveChanges();
+                return Redirect("/Bookmarks/Show/" + comm.BookmarkId);
+            }
+            else
+            {
+                Bookmark bookmark = db.Bookmarks.Include("User")
+                                .Include("Comments")
+                                .Include("Comments.User")
+                                .Where(bok => bok.Id == comm.BookmarkId)
+                                .First();
+
+
+                SetAccessRights();
+
+                return View(bookmark);
+            }
+
+        }
+
+        [Authorize(Roles = "User,Admin")]
         public IActionResult New()
         {
             Bookmark bm = new Bookmark();
@@ -65,6 +97,7 @@ namespace ASP_PROJECT.Controllers
             return View(bm);
         }
 
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
         public IActionResult New(Bookmark bookmark)
         {
@@ -75,25 +108,34 @@ namespace ASP_PROJECT.Controllers
                 db.Bookmarks.Add(bookmark);
                 db.SaveChanges();
                 TempData["message"] = "Bookmarkul a fost adaugat";
+                TempData["messageType"] = "alert-success";
                 return RedirectToAction("Index"); 
             }
 
             catch (Exception)
             {
                 bookmark.Categ = GetUserCategories();
-                return RedirectToAction("New");
+                return RedirectToAction("Index");
             }
         }
 
+        [Authorize(Roles ="User,Admin")]
         public IActionResult Edit(int id)
         {
             Bookmark bookmark = db.Bookmarks.Where(bok => bok.Id==id).First();
 
             bookmark.Categ = GetUserCategories();
-
-            return View(bookmark);
+            if (bookmark.UserId==_userManager.GetUserId(User) || User.IsInRole("Admin"))
+                return View(bookmark);
+            else
+            {
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui bookmark care nu va apartine";
+                TempData["messageType"] = "alert-danger";
+                return RedirectToAction("Index");
+            }
         }
 
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
         public IActionResult Edit(int id,Bookmark requestBookmark)
         {
@@ -109,6 +151,7 @@ namespace ASP_PROJECT.Controllers
                     bookmark.Content = requestBookmark.Content;
                     db.SaveChanges();
                     TempData["message"] = "Bookmarkul a fost modificat";
+                    TempData["messageType"] = "alert-success";
                     return RedirectToAction("Index");
                 }
 
@@ -122,13 +165,14 @@ namespace ASP_PROJECT.Controllers
 
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui articol care nu va apartine";
+                TempData["message"] = "Nu aveti dreptul sa faceti modificari asupra unui bookmark care nu va apartine";
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Index");
             }
 
         }
 
+        [Authorize(Roles = "User,Admin")]
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -136,6 +180,14 @@ namespace ASP_PROJECT.Controllers
 
             if (bookmark.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
+                if (bookmark.Comments.Count>0)
+                {
+                    foreach (var comment in bookmark.Comments)
+                    {
+                        db.Comments.Remove(comment);
+                    }
+                }
+
                 db.Bookmarks.Remove(bookmark);
                 db.SaveChanges();
                 TempData["message"] = "Bookmarul a fost sters";
@@ -145,7 +197,7 @@ namespace ASP_PROJECT.Controllers
 
             else
             {
-                TempData["message"] = "Nu aveti dreptul sa stergeti un articol care nu va apartine";
+                TempData["message"] = "Nu aveti dreptul sa stergeti un bookmark care nu va apartine";
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Index");
             }
@@ -170,17 +222,15 @@ namespace ASP_PROJECT.Controllers
         [NonAction]
         public IEnumerable<SelectListItem> GetUserCategories()
         {
-            // generam o lista de tipul SelectListItem fara elemente
+
             var selectList = new List<SelectListItem>();
 
-            // extragem toate categoriile din baza de date
             var categories = from cat in db.Categories
+                             where cat.UserId==_userManager.GetUserId(User)
                              select cat;
-            // iteram prin categorii
+
             foreach (var category in categories)
             {
-                // adaugam in lista elementele necesare pentru dropdown
-                // id-ul categoriei si denumirea acesteia
                 selectList.Add(new SelectListItem
                 {
                     Value = category.Id.ToString(),
