@@ -16,6 +16,22 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\mihai\OneDrive\Documents\GitHub\Proiect-ASP.NET\ASP PROJECT
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,6 +50,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Views/Bookmarks/Show.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQm9va21hcmtzXFNob3cuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Views/Categories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Views/Categories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Views/Categories/New.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xOZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Views/Categories/Show.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xTaG93LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mihai/OneDrive/Documents/GitHub/Proiect-ASP.NET/ASP PROJECT/Views/Comments/Edit.cshtml]

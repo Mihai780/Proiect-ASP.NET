@@ -41,8 +41,7 @@ namespace ASP_PROJECT.Controllers
 
         public IActionResult Show(int id)
         {
-            Bookmark bookmark = db.Bookmarks.Include("User").Include("Comments").Include("Comments.User")
-                                .Where(bok => bok.Id == id).First();
+            Bookmark bookmark = db.Bookmarks.Include("User").Include("Comments").Include("Comments.User").Where(bok => bok.Id == id).First();
 
             ViewBag.Bookmark = bookmark;
 

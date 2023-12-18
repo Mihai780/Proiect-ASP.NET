@@ -1,24 +1,22 @@
-﻿<h2 class="text-center">Afisare bookmarks</h2>
-<br />
-
-@if (ViewBag.Message != null)
+﻿@if (ViewBag.Message != null)
 {
 
     <h2 class="alert-success p-3 rounded-3 text-center mb-5">@ViewBag.Message</h2>
 }
 
-<div class="d-flex justify-content-center">
+@* <div class="d-flex justify-content-center">
 
     <a class="btn btn-outline-success" href="/Bookmarks/New">Adauga bookmark</a>
     <br />
 
-</div>
+</div> *@
 
 <br />
 
 
 @foreach (var bookmark in ViewBag.Bookmarks)
 {
+    <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">
     <div class="card">
 
         <div class="card-body">
@@ -29,8 +27,6 @@
 
             @*<div><i class="bi bi-person"></i> @Model.User.UserName</div>*@
 
-            <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">Afisare bookmark</a>
-
             <span class="alert-success px-1 align-content-center">@bookmark.Date</span>
 
         </div>
@@ -39,6 +35,7 @@
 
     <br />
     <br />
+    </a>
 }
 
 

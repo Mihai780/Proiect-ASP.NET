@@ -1,13 +1,13 @@
 {
   "dependencies": {
-    "mssql1": {
-      "type": "mssql",
-      "connectionId": "ConnectionStrings:Pinterest"
-    },
     "mssql2": {
       "type": "mssql",
       "connectionId": "ConnectionStrings:PinterestCloneDB",
       "dynamicId": null
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:Pinterest"
     }
   }
 }
