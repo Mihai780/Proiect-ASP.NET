@@ -61,13 +61,14 @@
                 <div>
 
                     <p>@comm.Content</p>
+                    <small>@comm.User.UserName</small>
                     <small>@comm.Date</small>
 
                 </div>
                 <br>
 
                 <div class="d-flex">
-                    @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    @if (ViewBag.AfisareButoane == true && @comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
                     {
 
                         <div>
@@ -116,7 +117,7 @@
 
                     <div class="card-body">
 
-                        <input type="hidden" name="ArticleId" value="@Model.Id" />
+                        <input type="hidden" name="BookmarkId" value="@Model.Id" />
 
                         <label>Continut comentariu</label>
                         <br />
