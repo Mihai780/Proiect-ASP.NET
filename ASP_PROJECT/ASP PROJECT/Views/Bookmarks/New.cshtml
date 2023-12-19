@@ -4,9 +4,9 @@
     ViewBag.Title = "New";
 }
 
-<h2>Adaugare bookmark</h2>
+<h2 class="text-white text-center">Adaugare bookmark</h2>
 <br />
-
+<div class="text-white">
 <form method="post" action="/Bookmarks/New">
 
     @Html.Label("Title","Titlu bookmark")
@@ -28,8 +28,10 @@
     @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
     "Selectati categoria", new { @class = "form-control" })
 
+    <br/>
+
     <button class="btn btn-success" type="submit">Adauga bookmark</button>
 
 </form>
 
-
+</div>

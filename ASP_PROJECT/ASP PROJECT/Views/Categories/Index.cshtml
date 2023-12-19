@@ -2,12 +2,12 @@
     ViewBag.Title = "Lista categorii";
 }
 <br />
-<h2 class="text-center">@ViewBag.Title</h2>
+<h2 class="text-center text-white">@ViewBag.Title</h2>
 <br />  
 
 @if (TempData.ContainsKey("message"))
 {
-    <h1>@ViewBag.message</h1>
+    <h1 class=@ViewBag.messageType>@ViewBag.message</h1>
 }
 
 <br />
@@ -18,19 +18,21 @@
 
 <br />
 
+<div class="text-white">
 @foreach (var category in ViewBag.Categories)
 {
     @Html.Label("CategoryName", "Denumire categorie")
-    <p>@category.CategoryName</p>
+    <p class="text-white">@category.CategoryName</p>
     @if(category.Description !=null)
     {
         @Html.Label("Description", "Descriere categorie")
-        <p>@category.CategoryName</p>
+        <p class="text-white">@category.CategoryName</p>
     }
     <a class="btn alert-success" href="/Categories/Show/@category.Id">Afisare categorie</a>
     <a class="btn alert-success" href="/Categories/Edit/@category.Id">Editare categorie</a>
-    <a class="btn alert-success" href="/Categories/Delete/@category.Id">Stergere categorie</a>
+    @*<a class="btn alert-success" href="/Categories/Delete/@category.Id">Stergere categorie</a>*@
     <br />
     <hr />
     <br />
 }
+</div>

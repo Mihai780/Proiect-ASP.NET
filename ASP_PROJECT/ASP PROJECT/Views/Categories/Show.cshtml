@@ -4,19 +4,19 @@
 }
 
 
-<h2>@ViewBag.Title</h2>
+<h2 class="text-white">@ViewBag.Title</h2>
 
 <br />
 
 @if (ViewBag.EsteAdmin)
 {
-    <i class="bi bi-person"> Creat de: </i> @Model.User.UserName
+    <i class="bi bi-person text-white"> Creat de: @Model.User.UserName</i>
 
 }
 
-<p>@Model.CategoryName</p>
+<p class="text-white">@Model.CategoryName</p>
 
-<p>@Model.Description</p>
+<p class="text-white">@Model.Description</p>
 
 
 <form method="post" action="/Categories/Delete/@Model.Id">

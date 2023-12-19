@@ -36,6 +36,7 @@ namespace ASP_PROJECT.Controllers
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.message = TempData["message"].ToString();
+                ViewBag.messageType = TempData["messageType"].ToString();
             }
 
             if (User.IsInRole("Admin"))

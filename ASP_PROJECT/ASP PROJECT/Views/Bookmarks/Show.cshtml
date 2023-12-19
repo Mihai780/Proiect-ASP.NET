@@ -15,7 +15,7 @@
 
 <div class="card">
 
-    <div class="card-body">
+    <div class="card-body text-white">
 
         <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Title</h3>
 
@@ -52,13 +52,13 @@
 
 @foreach (var comm in Model.Comments)
 {
-    <div class="container">
+    <div class="container border-white">
         <div class="row">
             <div class="col-md-2"></div>
 
             <div class="col-md-8">
 
-                <div>
+                <div class="text-white">
 
                     <p>@comm.Content</p>
                     <small>@comm.User.UserName</small>
@@ -111,7 +111,7 @@
 
         <div class="col-md-8">
 
-            <div class="card">
+            <div class="card text-white">
 
                 <form method="post" action="/Bookmarks/Show/@Model.Id">
 

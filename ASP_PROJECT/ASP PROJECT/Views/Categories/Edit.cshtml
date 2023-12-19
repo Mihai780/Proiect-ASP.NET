@@ -5,9 +5,9 @@
     ViewBag.Title = "Editare categorie";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2 class="text-white">@ViewBag.Title</h2>
 
-
+<div class="text-white">
 @using (Html.BeginForm(controllerName: "Categories", actionName: "Edit", method: FormMethod.Post,routeValues: new { id = Model.Id }))
 {
     @Html.Label("CategoryName", "Denumire categorie")
@@ -28,4 +28,4 @@
 
     <button class="btn btn-success" type="submit">Modifica categoria</button>
 }
-
+</div>

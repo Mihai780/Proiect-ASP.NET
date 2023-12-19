@@ -1,12 +1,12 @@
 ﻿@model ASP_PROJECT.Models.Bookmark;
 
-<h2 class="text-center mt-5">Editare bookmark</h2>
+<h2 class="text-center mt-5 text-white">Editare bookmark</h2>
 
 <br />
 
 <div class="container mt-5">
     <div class="row">
-        <div class="col-md-6 offset-3">
+        <div class="col-md-6 offset-3 text-white">
             @using (Html.BeginForm(actionName: "Edit", controllerName: "Bookmarks", method: FormMethod.Post, routeValues: new { id = Model.Id }))
             {
 
@@ -27,6 +27,8 @@
 
                 @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"), 
                 "Selectati categoria", new { @class = "form-control" })
+
+                <br/><br/>
 
                 <button class="btn btn-success" type="submit">Modifica bookmark</button>
 

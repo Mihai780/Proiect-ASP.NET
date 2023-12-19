@@ -31,6 +31,12 @@ namespace ASP_PROJECT.Controllers
 
         public IActionResult Index()
         {
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message = TempData["message"].ToString();
+                ViewBag.messageType = TempData["messageType"].ToString();
+            }
+
             var bookmarks = db.Bookmarks.Include("User");
 
             ViewBag.Bookmarks = bookmarks;
@@ -143,7 +149,7 @@ namespace ASP_PROJECT.Controllers
 
             if (bookmark.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
-                try
+                if (ModelState.IsValid)
                 {
 
                     bookmark.Title = requestBookmark.Title;
@@ -155,7 +161,7 @@ namespace ASP_PROJECT.Controllers
                     return RedirectToAction("Index");
                 }
 
-                catch (Exception)
+                else
                 {
                     requestBookmark.Categ = GetUserCategories();
                     return RedirectToAction("Edit", id);
@@ -176,7 +182,7 @@ namespace ASP_PROJECT.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            Bookmark bookmark = db.Bookmarks.Include("Comments").Include("CategoriesController")
+            Bookmark bookmark = db.Bookmarks.Include("Comments")
                                          .Where(bok => bok.Id == id)
                                          .First();
 
