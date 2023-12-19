@@ -156,7 +156,9 @@ namespace ASP_PROJECT.Controllers
         
         public IActionResult Delete(int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category= db.Categories.Include("BookmarkCategories")
+                                         .Where(cat => cat.Id == id)
+                                         .First();
             if (category.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
                 if (category.BookmarkCategories.Count>0)

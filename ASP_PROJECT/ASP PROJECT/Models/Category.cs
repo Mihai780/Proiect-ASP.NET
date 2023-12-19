@@ -11,7 +11,7 @@ namespace ASP_PROJECT.Models
         public string CategoryName { get; set; }
 
         [MaxLength(20, ErrorMessage = "Descrierea nu trebuie sa depaseasca 20 de caractere")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         public virtual ICollection<BookmarkCategory>? BookmarkCategories { get; set; }
         public string? UserId { get; set; }

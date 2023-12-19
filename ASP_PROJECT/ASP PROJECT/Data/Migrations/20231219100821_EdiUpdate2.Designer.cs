@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASP_PROJECT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231218152242_Incercare2")]
-    partial class Incercare2
+    [Migration("20231219100821_EdiUpdate2")]
+    partial class EdiUpdate2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

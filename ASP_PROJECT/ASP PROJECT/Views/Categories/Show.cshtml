@@ -27,9 +27,10 @@
 <br />
 <a class="btn alert-success" href="/Categories/Index/">Afisare lista categorii</a>
 
-@if (Model.BookmarkCategories.Count>0)
-@foreach (var bookmarkcat in Model.BookmarkCategories)
+@if (Model.BookmarkCategories.Count > 0)
 {
+    @foreach (var bookmarkcat in Model.BookmarkCategories)
+    {
         <div class="col-12">
             <div class="card" style="width: 100%;">
                 @*<img src="..." class="card-img-top" alt="..."> *@
@@ -41,8 +42,8 @@
                 </div>
             </div>
         </div>
+    }
 }
-
 <br />
 <hr />
 <br />

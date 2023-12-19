@@ -176,7 +176,9 @@ namespace ASP_PROJECT.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            Bookmark bookmark = db.Bookmarks.Find(id);
+            Bookmark bookmark = db.Bookmarks.Include("Comments").Include("CategoriesController")
+                                         .Where(bok => bok.Id == id)
+                                         .First();
 
             if (bookmark.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {

@@ -4,7 +4,7 @@
 
 namespace ASP_PROJECT.Data.Migrations
 {
-    public partial class Incercare2 : Migration
+    public partial class EdiUpdate2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

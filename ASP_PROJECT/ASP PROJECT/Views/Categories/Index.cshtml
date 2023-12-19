@@ -22,6 +22,11 @@
 {
     @Html.Label("CategoryName", "Denumire categorie")
     <p>@category.CategoryName</p>
+    @if(category.Description !=null)
+    {
+        @Html.Label("Description", "Descriere categorie")
+        <p>@category.CategoryName</p>
+    }
     <a class="btn alert-success" href="/Categories/Show/@category.Id">Afisare categorie</a>
     <a class="btn alert-success" href="/Categories/Edit/@category.Id">Editare categorie</a>
     <a class="btn alert-success" href="/Categories/Delete/@category.Id">Stergere categorie</a>
