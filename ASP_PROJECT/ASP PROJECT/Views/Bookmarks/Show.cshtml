@@ -48,60 +48,6 @@
 </div>
 
 <br />
-<br />
-
-@foreach (var comm in Model.Comments)
-{
-    <div class="container border-white">
-        <div class="row">
-            <div class="col-md-2"></div>
-
-            <div class="col-md-8">
-
-                <div class="text-white">
-
-                    <p>@comm.Content</p>
-                    <small>@comm.User.UserName</small>
-                    <small>@comm.Date</small>
-
-                </div>
-                <br>
-
-                <div class="d-flex">
-                    @if (ViewBag.AfisareButoane == true && @comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
-                    {
-
-                        <div>
-
-                            <a class="btn btn-outline-primary" href="/Comments/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
-
-                        </div>
-
-                        <div>
-                        
-                        
-                            <form method="post" action="/Comments/Delete/@comm.Id">
-
-                                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
-
-                            </form>
-                        </div>
-                     }
-                    
-
-                </div>
-
-                <br />
-
-            </div>
-
-            <div class="col-md-2"></div>
-
-        </div>
-
-    </div>
-}
-
 
 <div class="container">
 
@@ -140,3 +86,93 @@
     </div>
 
 </div>
+
+<br />
+
+@foreach (var comm in Model.Comments)
+{
+
+    <div class="d-flex justify-content-around">
+        <div class="containerr border-white">
+            <div class="row">
+                <div class="col-md-8 d-flex">
+                            <small>@comm.User.UserName</small>
+                </div>
+                <div class="col-md-4 d-flex justify-content-between">
+                    @if (ViewBag.AfisareButoane == true && @comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+
+                        <div>
+
+                            <a class="btn btn-outline-primary" href="/Comments/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                        </div>
+                        <br />
+                        <div>
+
+
+                            <form method="post" action="/Comments/Delete/@comm.Id">
+
+                                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="comentariu">
+                <p>@comm.Content</p>
+            </div>
+            <div class="date-scris">@comm.Date</div>
+        </div>
+
+    </div>
+    <br />
+    @* <div class="container border-white">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-13">
+                <div class="d-flex">
+                  <div class="text-white">
+                    <small>@comm.User.UserName</small>
+                    <p>@comm.Content</p>
+                    <div class="text-sm">@comm.Date</div>
+
+                  </div>
+                  <br>
+
+                
+                    @if (ViewBag.AfisareButoane == true && @comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+
+                        <div>
+
+                            <a class="btn btn-outline-primary" href="/Comments/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                        </div>
+
+                        <div>
+                        
+                        
+                            <form method="post" action="/Comments/Delete/@comm.Id">
+
+                                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                            </form>
+                        </div>
+                     }
+                    
+
+                </div>
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div> *@
+}

@@ -50,3 +50,17 @@ a.nav-link:hover,button.nav-link:hover {
     height:100px;
     padding-bottom: 30px;
 }
+
+.date-scris{
+    font-size:10px;
+}
+
+.containerr{
+    width:40%;
+    height:40%;
+}
+
+.comentariu{
+    color:white;
+    overflow:hidden;
+}

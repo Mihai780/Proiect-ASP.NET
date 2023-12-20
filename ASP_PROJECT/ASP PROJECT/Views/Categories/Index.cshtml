@@ -26,7 +26,7 @@
     @if(category.Description !=null)
     {
         @Html.Label("Description", "Descriere categorie")
-        <p class="text-white">@category.CategoryName</p>
+        <p class="text-white">@category.Description</p>
     }
     <a class="btn alert-success" href="/Categories/Show/@category.Id">Afisare categorie</a>
     <a class="btn alert-success" href="/Categories/Edit/@category.Id">Editare categorie</a>
