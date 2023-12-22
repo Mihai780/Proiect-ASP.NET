@@ -41,8 +41,34 @@ namespace ASP_PROJECT.Controllers
                                  orderby bookmark.Date descending
                                  select bookmark).Take(5);
 
-            ViewBag.BookmarksDate = bookmarksdate;
+            //spatiu pt sortare dupa like-uri
 
+            //motor cautare TREBUIE SCHIMBAT VIEW-UL
+            var search = "";
+            if (Convert.ToString(HttpContext.Request.Query["search"]) !=null)
+            {
+                search =Convert.ToString(HttpContext.Request.Query["search"]).Trim();
+                List<int> bookmarkID = db.Bookmarks.Where(
+                                     bm => bm.Title.Contains(search) || bm.Content.Contains(search) || bm.Description.Contains(search)
+                                      ).Select(bm=>bm.Id).ToList();
+
+                bookmarksdate = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
+                               .Include("User")
+                              .OrderBy(b => b.Title);
+                        
+            }
+            ViewBag.SearchString = search;
+            if (search != "")
+            {
+                ViewBag.PaginationBaseUrl = "/Articles/Index/?search="
+                + search;
+                //+ "&page"; //dupa afisare paginata
+            }
+            else
+            {
+                ViewBag.PaginationBaseUrl = "/Articles/Index"; //Index/&page dupa paginare afisata
+            }
+            ViewBag.BookmarksDate = bookmarksdate;
             return View();
         }
 
