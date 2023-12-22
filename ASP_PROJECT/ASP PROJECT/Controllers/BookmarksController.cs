@@ -80,6 +80,8 @@ namespace ASP_PROJECT.Controllers
                                 .Where(bok => bok.Id == id)
                                 .First();
 
+            ViewBag.categories = db.Categories.Where(b => b.UserId == _userManager.GetUserId(User))
+                                .ToList();
 
             SetAccessRights();
 
@@ -91,6 +93,42 @@ namespace ASP_PROJECT.Controllers
 
             return View(bookmark);
         }
+
+        [HttpPost]
+        [Authorize(Roles ="User,Admin")]
+        public IActionResult AddCategory([FromForm] BookmarkCategory bookmarkCategory)
+        {
+            if (ModelState.IsValid)
+            {
+                if (db.BookmarkCategories
+                   .Where(ab => ab.BookmarkId == bookmarkCategory.BookmarkId)
+                   .Where(ab => ab.CategoryId == bookmarkCategory.CategoryId)
+                   .Count() > 0)
+                {
+                    TempData["message"] = "Acest bookmark este deja adaugat in categoria respectiva";
+                    TempData["messageType"] = "alert-danger";
+                }
+                else
+                {
+                    // Adaugam asocierea intre articol si bookmark 
+                    db.BookmarkCategories.Add(bookmarkCategory);
+                    // Salvam modificarile
+                    db.SaveChanges();
+
+                    // Adaugam un mesaj de succes
+                    TempData["message"] = "Bookmark-ul a fost adaugat in categoria selectata";
+                    TempData["messageType"] = "alert-success";
+                }
+
+            }
+            else
+            {
+                TempData["message"] = "Nu s-a putut adauga bookmarkul";
+                TempData["messageType"] = "alert-danger";
+            }
+            return Redirect("/Bookmarks/Show/" + bookmarkCategory.BookmarkId);
+        }
+        
 
         [HttpPost]
         [Authorize(Roles ="User,Admin")]

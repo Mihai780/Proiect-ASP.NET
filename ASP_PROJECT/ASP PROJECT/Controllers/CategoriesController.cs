@@ -41,7 +41,7 @@ namespace ASP_PROJECT.Controllers
 
             if (User.IsInRole("Admin"))
             {
-                var categories = from category in db.Categories
+                var categories = from category in db.Categories.Include("User")
                                  orderby category.CategoryName
                                  select category;
                 ViewBag.Categories = categories;
@@ -49,8 +49,8 @@ namespace ASP_PROJECT.Controllers
             }
             else if (User.IsInRole("User"))
             {
-                var categories = from category in db.Categories
-                                 where category.UserId == _userManager.GetUserId(User)
+                var categories = from category in db.Categories.Include("User")
+                                 .Where(cat=>cat.UserId == _userManager.GetUserId(User))
                                  orderby category.CategoryName
                                  select category;
                 ViewBag.Categories = categories;
@@ -63,17 +63,48 @@ namespace ASP_PROJECT.Controllers
         [Authorize(Roles = "User,Admin")]
         public IActionResult Show(int id)
         {
+            SetAccessRights();
             Category category = db.Categories.Find(id);
-            if (User.IsInRole("Admin") || category.UserId==_userManager.GetUserId(User))
+            if (User.IsInRole("User"))
             {
-                var categories = db.Categories.Include("User").Include("BookmarkCategories").FirstOrDefault();
-                SetAccessRights();
+                var categories = db.Categories
+                                .Include("BookmarkCategories.Bookmark.User")
+                                .Include("User")
+                                .Where(b => b.Id == id)
+                                .Where(b => b.UserId == _userManager.GetUserId(User))
+                                .FirstOrDefault();
+
+                if (categories == null)
+                {
+                    TempData["message"] = "Nu aveti drepturi";
+                    TempData["messageType"] = "alert-danger";
+                    return RedirectToAction("Index", "Bookmarks");
+                }
 
                 return View(categories);
             }
+            else
+            if (User.IsInRole("Admin"))
+            {
+                var categories = db.Categories
+                                .Include("BookmarkCategories.Bookmark.User")
+                                .Include("User")
+                                .Where(b => b.Id == id)
+                                .FirstOrDefault();
+
+                if (categories == null)
+                {
+                    TempData["message"] = "Resursa cautata nu exista";
+                    TempData["messageType"] = "alert-danger";
+                    return RedirectToAction("Index", "Bookmarks");
+                }
+
+                return View(categories);
+            }
+
             else 
             {
-                TempData["message"] = "Categoria pe care ati incercat sa o accesati nu va apartine";
+                TempData["message"] = "Trebuie sa fiti logat pentru a vedea aceasta pagina";
                 TempData["messageType"] = "alert-danger";
                 return Redirect("/Bookmarks/Index");
             }
