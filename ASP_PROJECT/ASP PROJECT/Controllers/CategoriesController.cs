@@ -213,6 +213,40 @@ namespace ASP_PROJECT.Controllers
                 
         }
 
+        [HttpPost]
+        [Authorize(Roles="User,Admin")]
+        public ActionResult RemoveFromCategory(int bookmarkId, int CategoryId)
+        {
+            BookmarkCategory bmc = db.BookmarkCategories
+                                  .Where(ab => ab.BookmarkId == bookmarkId)
+                                  .Where(ab => ab.CategoryId == CategoryId)
+                                  .First();
+
+            var categories = db.Categories
+                                .Include("BookmarkCategories.Bookmark.User")
+                                .Include("User")
+                                .Where(b => b.Id == CategoryId)
+                                .Where(b => b.UserId == _userManager.GetUserId(User))
+                                .FirstOrDefault();
+
+            if (User.IsInRole("Admin") || categories.UserId == _userManager.GetUserId(User))
+            {
+               
+                db.BookmarkCategories.Remove(bmc);
+                TempData["message"] = "Bookmark-ul a fost eliminat din categorie";
+                TempData["messageType"] = "alert-success";
+                db.SaveChanges();
+                return Redirect("/Categories/Show/" + CategoryId);
+            }
+            else
+            {
+                TempData["message"] = "Nu puteti sterge acest bookmark din aceasta categorie";
+                TempData["messageType"] = "alert-danger";
+                return Redirect("/Categories/Show/" + CategoryId);
+            }
+           
+        }
+
         private void SetAccessRights()
         {
             ViewBag.AfisareButoane = false;

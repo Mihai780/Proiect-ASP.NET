@@ -33,11 +33,16 @@
     {
         <div class="col-12">
             <div class="card" style="width: 100%;">
-                @*<img src="..." class="card-img-top" alt="..."> *@
 
                 <div class="card-body">
 
                     @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
+
+                    <form method="post" action="/Categories/RemoveFromCategory/@bookmarkcat.BookmarkId/@bookmarkcat.CategoryId">
+
+                        <button class="btn btn-danger" type="submit">Sterge bookmark-ul din categorie</button>
+                    
+                    </form>
 
                 </div>
             </div>
