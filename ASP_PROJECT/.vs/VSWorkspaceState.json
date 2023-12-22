@@ -3,8 +3,9 @@
     "",
     "\\ASP PROJECT",
     "\\ASP PROJECT\\Views",
-    "\\ASP PROJECT\\Views\\Bookmarks"
+    "\\ASP PROJECT\\Views\\Bookmarks",
+    "\\ASP PROJECT\\Views\\Comments"
   ],
-  "SelectedNode": "\\ASP PROJECT\\Views\\Bookmarks\\Show.cshtml",
+  "SelectedNode": "\\ASP PROJECT\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

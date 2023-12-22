@@ -6,17 +6,9 @@
     <h2 class=@ViewBag.messageType>@ViewBag.message</h2>
 }
 
-@* <div class="d-flex justify-content-center">
-
-    <a class="btn btn-outline-success" href="/Bookmarks/New">Adauga bookmark</a>
-    <br />
-
-</div> *@
-
 <br />
-<div class="d-flex flex-row flex-wrap justify-content-space evenly gap-3">
-
-@foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.Bookmarks)
+<h2 class="text-white text-center">Cele mai recente bookmarks</h2>
+@foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksDate)
 {
     <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">
 

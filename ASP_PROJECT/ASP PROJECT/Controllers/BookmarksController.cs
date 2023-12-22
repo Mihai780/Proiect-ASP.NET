@@ -37,9 +37,11 @@ namespace ASP_PROJECT.Controllers
                 ViewBag.messageType = TempData["messageType"].ToString();
             }
 
-            var bookmarks = db.Bookmarks.Include("User");
+            var bookmarksdate = (from bookmark in db.Bookmarks.Include("User")
+                                 orderby bookmark.Date descending
+                                 select bookmark).Take(5);
 
-            ViewBag.Bookmarks = bookmarks;
+            ViewBag.BookmarksDate = bookmarksdate;
 
             return View();
         }
