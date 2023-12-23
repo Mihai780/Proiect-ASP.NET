@@ -9,21 +9,33 @@
         <div class="col-md-6 offset-3 text-white">
             @using (Html.BeginForm(actionName: "Edit", controllerName: "Bookmarks", method: FormMethod.Post, routeValues: new { id = Model.Id }))
             {
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })  
 
                 @Html.Label("Title","Titlu bookmark")
                 <br />
                 @Html.EditorFor(b => b.Title ,new { htmlAttributes = new {@class="form-control"}})
-                <br /><br />
+
+                <br />
+                @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+
+                <br />
+
 
                 @Html.Label("Description","Descriere bookmark")
                 <br />
                 @Html.Editor("Description",new{ htmlAttributes = new {@class="form-control"}})
-                <br /><br />
+                <br />
+                @Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })
+
+                <br />
 
                 @Html.Label("Content","Content bookmark")
                 <br />
                 @Html.TextArea("Content",new { htmlAttributes = new {@class="form-control"}})
-                <br /><br />
+                <br />
+                @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+
+                <br />
 
                 @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"), 
                 "Selectati categoria", new { @class = "form-control" })

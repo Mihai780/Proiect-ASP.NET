@@ -27,6 +27,8 @@
 <br />
 <a class="btn alert-success" href="/Categories/Index/">Afisare lista categorii</a>
 
+<h3 class="text-white"> Postari salvate in aceasta categorie</h3>
+
 @if (Model.BookmarkCategories.Count > 0)
 {
     @foreach (var bookmarkcat in Model.BookmarkCategories)
@@ -34,6 +36,7 @@
         <div class="col-12">
             <div class="card" style="width: 100%;">
 
+                <a class="btn btn-success" href="/Bookmarks/Show/@bookmarkcat.BookmarkId">
                 <div class="card-body">
 
                     @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
@@ -45,6 +48,7 @@
                     </form>
 
                 </div>
+                </a>
             </div>
         </div>
     }

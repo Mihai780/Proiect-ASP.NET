@@ -74,6 +74,11 @@ namespace ASP_PROJECT.Controllers
 
         public IActionResult Show(int id)
         {
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message = TempData["message"].ToString();
+                ViewBag.messageType = TempData["messageType"].ToString();
+            }
             Bookmark bookmark = db.Bookmarks.Include("User")
                                 .Include("Comments")
                                 .Include("Comments.User")
@@ -173,7 +178,7 @@ namespace ASP_PROJECT.Controllers
         [HttpPost]
         public IActionResult New(Bookmark bookmark)
         {
-            try
+            if (ModelState.IsValid)
             {
                 bookmark.UserId = _userManager.GetUserId(User);
                 bookmark.Date = DateTime.Now;
@@ -184,10 +189,10 @@ namespace ASP_PROJECT.Controllers
                 return RedirectToAction("Index"); 
             }
 
-            catch (Exception)
+            else
             {
                 bookmark.Categ = GetUserCategories();
-                return RedirectToAction("Index");
+                return View(bookmark);
             }
         }
 
