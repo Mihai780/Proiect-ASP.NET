@@ -213,8 +213,8 @@ namespace ASP_PROJECT.Controllers
                 
         }
 
-        [HttpPost]
-        [Authorize(Roles="User,Admin")]
+        [Authorize(Roles = "User,Admin")]
+        [HttpPost] 
         public ActionResult RemoveFromCategory(int bookmarkId, int CategoryId)
         {
             BookmarkCategory bmc = db.BookmarkCategories

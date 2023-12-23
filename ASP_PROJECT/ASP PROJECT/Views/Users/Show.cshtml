@@ -1,0 +1,78 @@
+﻿@model ASP_PROJECT.Models.ApplicationUser
+
+<h2 class="text-white"> Profilul tau! </h2>
+<br/>
+<div class="card mt-3" style="height:100%; width: 100%;">
+
+    <div class="card-body d-flex justify-content-between flex-column text-white">
+        <div>
+            <p><i class="bi bi-person"> </i> Username: @Model.UserName</p>
+
+            <p><i class="bi bi-envelope"></i> Email utilizator: @Model.Email</p>
+
+            @if (ViewBag.Roles!=null && ViewBag.Roles.Count > 0)
+            {
+                <p><i class="bi bi-person"> </i> Roluri utilizator:</p>
+                @foreach (var role in ViewBag.Roles)
+                {
+                    <span class="rounded-pill bg-dark mr-2 px-4 py-2 text-white">@role</span>
+                }
+            }
+
+
+
+        </div>
+
+        <div class="d-flex flex-row justify-content-between p-3">
+            @if (ViewBag.EsteAdmin == true ||ViewBag.UserCurent==Model.Id && ViewBag.AfisareButoane==true)
+            {
+                <a class="btn btn-success" href="/Users/Edit/@Model.Id">Editeaza profilul</a>
+            }
+            @if ((string)Model.Id != ViewBag.UserCurent && ViewBag.EsteAdmin==true)
+            {
+                
+
+                @using (Html.BeginForm(actionName: "Delete", controllerName: "Users", method: FormMethod.Post, routeValues: new { id = @Model.Id }))
+                {
+
+                    <button class="btn btn-danger" type="submit">Sterge utilizator</button>
+
+                }
+            }
+           
+            
+        </div>
+        <h3 class="text-white"> Postari salvate </h3>
+        @if (Model.Categories.Count > 0)
+        {
+            @foreach (var category in Model.Categories)
+            {
+                @if (category.BookmarkCategories.Count > 0)
+                {
+                    @foreach (var bookmarkcat in category.BookmarkCategories)
+                    {
+                        <a class="nav-link text-white" href="/Bookmarks/Show/@bookmarkcat.BookmarkId">
+                        <div class="col-12">
+                            <div class="card" style="width: 100%;">
+
+                                <div class="card-body">
+
+                                    @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
+
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    }
+                }
+
+            }
+        }
+    </div>
+</div>
+
+
+
+
+
+
