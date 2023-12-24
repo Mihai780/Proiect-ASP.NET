@@ -15,6 +15,8 @@ namespace ASP_PROJECT.Models
         public DateTime Date { get; set; }
 
         public int? CategoryId { get; set; }
+        
+        public int Likes { get; set; }
 
         [NotMapped]
         public IEnumerable<SelectListItem>? Categ { get; set; }

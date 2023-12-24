@@ -52,8 +52,12 @@ a.nav-link:hover,button.nav-link:hover {
     padding-bottom: 30px;
 }
 
-.date-scris{
-    font-size:10px;
+.a-tw{
+    text-decoration:none;
+    color:white;
+}
+a.a-tw:hover{
+    color:white;
 }
 
 .containerr{

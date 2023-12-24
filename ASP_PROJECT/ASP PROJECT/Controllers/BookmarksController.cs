@@ -28,7 +28,39 @@ namespace ASP_PROJECT.Controllers
 
             _roleManager = roleManager;
         }
+        public IActionResult DateOrLike(int id)
+        {
+            if(id==1)
+            {
+                var bookmarks = from bookmark in db.Bookmarks.Include("User")
+                                     orderby bookmark.Date descending
+                                     select bookmark;
+                ViewBag.Bookmarks = bookmarks;
+            }
+            else
+            {
+                var bookmarks = from bookmark in db.Bookmarks.Include("User")
+                                     orderby bookmark.Likes descending
+                                     select bookmark;
+                ViewBag.Bookmarks = bookmarks;
+            }
+            var search = "";
+            if (Convert.ToString(HttpContext.Request.Query["search"]) != null)
+            {
+                search = Convert.ToString(HttpContext.Request.Query["search"]).Trim();
+                List<int> bookmarkID = db.Bookmarks.Where(
+                                     bm => bm.Title.Contains(search) || bm.Content.Contains(search) || bm.Description.Contains(search)
+                                      ).Select(bm => bm.Id).ToList();
 
+                var bookmarks = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
+                               .Include("User")
+                              .OrderBy(b => b.Title);
+                ViewBag.Bookmarks = bookmarks;
+                return View(); //de sters dupa ce se face paginarea;        
+            }
+            ViewBag.SearchString = search;
+            return View();
+        }
         public IActionResult Index()
         {
             if (TempData.ContainsKey("message"))
@@ -38,6 +70,9 @@ namespace ASP_PROJECT.Controllers
             }
 
             var bookmarksdate = (from bookmark in db.Bookmarks.Include("User")
+                                 orderby bookmark.Date descending
+                                 select bookmark).Take(5);
+            var bookmarkslike = (from bookmark in db.Bookmarks.Include("User")
                                  orderby bookmark.Date descending
                                  select bookmark).Take(5);
 
@@ -52,10 +87,11 @@ namespace ASP_PROJECT.Controllers
                                      bm => bm.Title.Contains(search) || bm.Content.Contains(search) || bm.Description.Contains(search)
                                       ).Select(bm=>bm.Id).ToList();
 
-                bookmarksdate = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
+                var bookmarks = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
                                .Include("User")
                               .OrderBy(b => b.Title);
-                        
+                ViewBag.Bookmarks = bookmarks;
+                return View(); //de sters dupa ce se face paginarea;        
             }
             ViewBag.SearchString = search;
             if (search != "")
@@ -69,6 +105,7 @@ namespace ASP_PROJECT.Controllers
                 ViewBag.PaginationBaseUrl = "/Articles/Index"; //Index/&page dupa paginare afisata
             }
             ViewBag.BookmarksDate = bookmarksdate;
+            ViewBag.BookmarksLike = bookmarkslike;
             return View();
         }
 
@@ -182,6 +219,7 @@ namespace ASP_PROJECT.Controllers
             {
                 bookmark.UserId = _userManager.GetUserId(User);
                 bookmark.Date = DateTime.Now;
+                bookmark.Likes = 0;
                 db.Bookmarks.Add(bookmark);
                 db.SaveChanges();
                 TempData["message"] = "Bookmarkul a fost adaugat";

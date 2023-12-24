@@ -7,7 +7,7 @@
 }
 
 <br />
-<h2 class="text-white text-center">Bookmark-uri</h2>
+<h2 class="text-white text-center">Bookmarks</h2>
 <form method="GET">
     <div class="input-group mb-3">
         <input type="text" class="form-control"
@@ -19,16 +19,53 @@
         </button>
     </div>
 </form>
-@foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksDate)
+<br />
+@if (ViewBag.Bookmarks == null)
 {
-    <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">
-
-    @Html.Partial("BookmarkInfo",bookmark)
-
+    <a class="a-tw" href="Bookmarks/DateOrLike/1"><h2>Most recent Bookmarks</h2></a>
     <br />
+    @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksDate)
+    {
+        <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id
+        ">
+
+            @Html.Partial("BookmarkInfo",bookmark)
+
+            <br />
+            <br />
+        </a>
+    }
+
+    <br /><br />
+
+    <a class="a-tw" href="Bookmarks/DateOrLike/2"><h2>Most liked Bookmarks</h2></a>
     <br />
-    </a>
+    @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksDate)
+    {
+        <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id
+        ">
+
+            @Html.Partial("BookmarkInfo", bookmark)
+
+            <br />
+            <br />
+        </a>
+    }
 }
-</div>
+else
+{
+    @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.Bookmarks)
+    {
+        <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id
+                ">
+
+            @Html.Partial("BookmarkInfo", bookmark)
+
+            <br />
+            <br />
+        </a>
+    }
+}
+
 
 

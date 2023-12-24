@@ -1,0 +1,33 @@
+﻿@model ASP_PROJECT.Models.Bookmark
+
+@if (ViewBag.message != null)
+{
+
+    <h2 class=@ViewBag.messageType>@ViewBag.message</h2>
+}
+
+<br />
+<h2 class="text-white text-center">Bookmark-uri</h2>
+<form method="GET">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control"
+               placeholder="Search topics or keywords" name="search"
+               value="@ViewBag.SearchString">
+        <button class="btn btn-outline-success"
+                type="submit">
+            Search
+        </button>
+    </div>
+</form>
+<br />
+
+@foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.Bookmarks)
+{
+    <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">
+
+        @Html.Partial("BookmarkInfo", bookmark)
+
+        <br />
+        <br />
+    </a>
+}
