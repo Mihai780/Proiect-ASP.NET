@@ -64,12 +64,21 @@ namespace ASP_PROJECT.Controllers
             {
                 ViewBag.Roles = null;
             }
-            var userposts=db.Users
+            var userposts = db.Users
                           .Include("Categories")
                           .Include("Categories.BookmarkCategories")
                           .Include("Categories.BookmarkCategories.Bookmark.User")
-                          .Where(u=>u.Id == id)
+                          .Where(u => u.Id == id)
                           .FirstOrDefault();
+
+            List<Bookmark> userbookmarks=new List<Bookmark>();
+
+            foreach (var categ in userposts.Categories)
+                foreach (var bmcat in categ.BookmarkCategories)
+                    if (!userbookmarks.Contains(bmcat.Bookmark))
+                        userbookmarks.Add(bmcat.Bookmark);
+
+            ViewBag.UserPosts=userbookmarks;
 
             return View(userposts);
         }

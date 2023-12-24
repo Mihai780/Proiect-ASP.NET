@@ -1,5 +1,7 @@
 ﻿@model ASP_PROJECT.Models.ApplicationUser
-
+@{
+    List<Bookmark> userposts = ViewBag.UserPosts;
+}
 <h2 class="text-white"> Profilul tau! </h2>
 <br/>
 <div class="card mt-3" style="height:100%; width: 100%;">
@@ -43,6 +45,27 @@
             
         </div>
         <h3 class="text-white"> Postari salvate </h3>
+
+        @if (userposts.Count>0)
+        {
+            @foreach(var bm in userposts)
+            {
+                <a class="btn btn-success m-2" href="/Bookmarks/Show/@bm.Id">
+                    <div class="col-12">
+                        <div class="card" style="width: 100%;">
+
+                            <div class="card-body m-2">
+
+                                @Html.Partial("BookmarkInfo", @bm)
+
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            }
+
+        }
+        @*
         @if (Model.Categories.Count > 0)
         {
             @foreach (var category in Model.Categories)
@@ -51,11 +74,11 @@
                 {
                     @foreach (var bookmarkcat in category.BookmarkCategories)
                     {
-                        <a class="btn btn-success" href="/Bookmarks/Show/@bookmarkcat.BookmarkId">
+                        <a class="btn btn-success m-2" href="/Bookmarks/Show/@bookmarkcat.BookmarkId">
                         <div class="col-12">
                             <div class="card" style="width: 100%;">
 
-                                <div class="card-body">
+                                <div class="card-body m-2">
 
                                     @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
 
@@ -67,7 +90,7 @@
                 }
 
             }
-        }
+        }*@
     </div>
 </div>
 

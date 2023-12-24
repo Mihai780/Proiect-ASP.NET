@@ -41,7 +41,10 @@
 
                     @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
 
-                    <form method="post" action="/Categories/RemoveFromCategory/@bookmarkcat.BookmarkId/@bookmarkcat.CategoryId">
+                    <form method="post" asp-controller="Categories" asp-action="RemoveFromCategory">
+                            
+                        <input type="hidden" name="BookmarkId" value="@bookmarkcat.BookmarkId" />
+                        <input type="hidden" name="CategoryId" value="@bookmarkcat.CategoryId" />
 
                         <button class="btn btn-danger" type="submit">Sterge bookmark-ul din categorie</button>
                     

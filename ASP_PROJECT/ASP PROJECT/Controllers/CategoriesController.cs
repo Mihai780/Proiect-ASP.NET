@@ -215,7 +215,7 @@ namespace ASP_PROJECT.Controllers
 
         [Authorize(Roles = "User,Admin")]
         [HttpPost] 
-        public ActionResult RemoveFromCategory(int bookmarkId, int CategoryId)
+        public IActionResult RemoveFromCategory(int bookmarkId, int CategoryId)
         {
             BookmarkCategory bmc = db.BookmarkCategories
                                   .Where(ab => ab.BookmarkId == bookmarkId)
@@ -231,20 +231,20 @@ namespace ASP_PROJECT.Controllers
 
             if (User.IsInRole("Admin") || categories.UserId == _userManager.GetUserId(User))
             {
-               
+                
                 db.BookmarkCategories.Remove(bmc);
                 TempData["message"] = "Bookmark-ul a fost eliminat din categorie";
                 TempData["messageType"] = "alert-success";
                 db.SaveChanges();
-                return Redirect("/Categories/Show/" + CategoryId);
+                
             }
             else
             {
                 TempData["message"] = "Nu puteti sterge acest bookmark din aceasta categorie";
                 TempData["messageType"] = "alert-danger";
-                return Redirect("/Categories/Show/" + CategoryId);
             }
-           
+            return Redirect("/Categories/Show/" + CategoryId);
+
         }
 
         private void SetAccessRights()
