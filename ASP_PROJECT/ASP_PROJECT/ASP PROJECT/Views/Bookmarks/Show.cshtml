@@ -1,0 +1,203 @@
+﻿@model ASP_PROJECT.Models.Bookmark
+
+
+<div class="d-flex justify-content-center">
+
+    <a class="btn btn-outline-success" href="/Bookmarks/Index/">Afisare bookmarks</a>
+    @if (ViewBag.AfisareButoane || ViewBag.EsteAdmin)
+    {
+        <a class="btn btn-outline-success" href="/Bookmarks/New">Adauga bookmark</a>
+    }
+    
+
+</div>
+
+<br />
+<div class="card">
+
+    <div class="card-body text-white">
+
+        <h3 class="card-title alert-success py-3 px-3 rounded-2">@Model.Title</h3>
+
+        <div class="card-text">@Model.Description</div>
+
+        <div class="card-text">@Model.Content</div>
+
+        <div><i class="bi bi-person"></i> @Model.User.UserName</div>
+
+        <div class="alert-success">@Model.Date</div>
+
+        <div class="likes d-flex justify-content-center">
+            <a class="a-tw" href="@Url.Action("LikeUD", "Bookmarks", new { id = Model.Id, userid = ViewBag.UserCurent})">
+                <div>&#x2661;</div>
+            </a>
+            <div>@Model.Likes</div>
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="d-flex flex-row justify-content-between">
+        @if (ViewBag.AfisareButoane == true && Model.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+        {
+
+            <a class="btn btn-success" href="/Bookmarks/Edit/@Model.Id">Editeaza bookmark</a>
+
+            <form method="post" action="/Bookmarks/Delete/@Model.Id">
+
+            <button class="btn btn-danger" type="submit">Sterge bookmark</button>
+
+            </form>
+        }
+
+        <form method="post" asp-controller="Bookmarks" asp-action="AddCategory">
+            <input type="hidden" name="BookmarkId" value="@Model.Id" />
+            <div class="d-flex flex-row justify-content-center p-3 border-1 border-top">
+                <div>
+                    <select name="CategoryId" class="form-control">
+                        <option selected>Adauga acest bookmark intr-o categorie</option>
+                        @foreach (var category in ViewBag.categories)
+                        {
+                            <option value="@category.Id">@category.CategoryName</option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-success alert-success" value="+" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<br />
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8">
+
+            <div class="card text-white">
+
+                <form method="post" action="/Bookmarks/Show/@Model.Id">
+
+                    <div class="card-body">
+
+                        <input type="hidden" name="BookmarkId" value="@Model.Id" />
+
+                        <label>Continut comentariu</label>
+                        <br />
+
+                        <textarea class="form-control" name="Content"></textarea>
+                        <br />
+
+                        <button class="btn btn-success " type="submit">Adauga comentariul</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-2"></div>
+
+    </div>
+
+</div>
+
+<br />
+
+@foreach (var comm in Model.Comments)
+{
+
+    <div class="d-flex justify-content-around">
+        <div class="containerr border-white">
+            <div class="row">
+                <div class="col-md-8 d-flex text-white">
+                            <small>@comm.User.UserName</small>
+                </div>
+                <div class="col-md-4 d-flex justify-content-between">
+                    @if (ViewBag.AfisareButoane == true && @comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+
+                        <div>
+
+                            <a class="btn btn-outline-primary" href="/Comments/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                        </div>
+                        <br />
+                        <div>
+
+
+                            <form method="post" action="/Comments/Delete/@comm.Id">
+
+                                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="comentariu">
+                <p>@comm.Content</p>
+            </div>
+            <div class="date-scris text-white">@comm.Date</div>
+        </div>
+
+    </div>
+    <br />
+    @* <div class="container border-white">
+        <div class="row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-13">
+                <div class="d-flex">
+                  <div class="text-white">
+                    <small>@comm.User.UserName</small>
+                    <p>@comm.Content</p>
+                    <div class="text-sm">@comm.Date</div>
+
+                  </div>
+                  <br>
+
+                
+                    @if (ViewBag.AfisareButoane == true && @comm.UserId == ViewBag.UserCurent || ViewBag.EsteAdmin)
+                    {
+
+                        <div>
+
+                            <a class="btn btn-outline-primary" href="/Comments/Edit/@comm.Id"><i class="bi bi-pencil-square"></i>Editeaza</a>
+
+                        </div>
+
+                        <div>
+                        
+                        
+                            <form method="post" action="/Comments/Delete/@comm.Id">
+
+                                <button class="btn btn-outline-danger" type="submit"><i class="bi bi-trash"></i>Sterge</button>
+
+                            </form>
+                        </div>
+                     }
+                    
+
+                </div>
+
+                <br />
+
+            </div>
+
+            <div class="col-md-2"></div>
+
+        </div>
+
+    </div> *@
+}

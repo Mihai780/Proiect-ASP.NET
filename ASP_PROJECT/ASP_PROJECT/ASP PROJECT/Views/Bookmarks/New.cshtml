@@ -1,0 +1,44 @@
+﻿@model ASP_PROJECT.Models.Bookmark
+
+@{
+    ViewBag.Title = "New";
+}
+
+<h2 class="text-white text-center">Adaugare bookmark</h2>
+<br />
+<div class="text-white">
+<form method="post" action="/Bookmarks/New">
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+    @Html.Label("Title","Titlu bookmark")
+    <br />
+    @Html.TextBox("Title",null,new{@class="form-control"})
+        <br />
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+        <br />
+    
+
+    @Html.Label("Description","Descriere bookmark")
+    <br />
+    @Html.TextArea("Description",null,new {@class="form-control"})
+        <br />@Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })<br />
+    
+
+    @Html.Label("Content","Content bookmark")
+    <br />
+    @Html.TextArea("Content",null,new{@class="form-control"})
+        <br />@Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })<br />
+    
+
+   <label>Selectati categoria</label>
+    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+    "Selectati categoria", new { @class = "form-control" })
+
+    <br/>
+
+    <button class="btn btn-success" type="submit">Adauga bookmark</button>
+
+</form>
+
+</div>
