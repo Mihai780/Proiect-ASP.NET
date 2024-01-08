@@ -11133,11 +11133,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP PROJECT\\ASP PROJECT.csproj",
+      "projectUniqueName": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP_PROJECT\\ASP PROJECT\\ASP PROJECT.csproj",
       "projectName": "ASP PROJECT",
-      "projectPath": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP PROJECT\\ASP PROJECT.csproj",
+      "projectPath": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP_PROJECT\\ASP PROJECT\\ASP PROJECT.csproj",
       "packagesPath": "C:\\Users\\eduar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP PROJECT\\obj\\",
+      "outputPath": "C:\\Users\\eduar\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP_PROJECT\\ASP PROJECT\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\eduar\\AppData\\Roaming\\NuGet\\NuGet.Config",

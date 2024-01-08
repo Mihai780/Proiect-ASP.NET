@@ -80,6 +80,12 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [Display(Name ="Username")]
+            [StringLength(25,ErrorMessage ="Username must not be longer than 15 charcters")]
+            [MinLength(3,ErrorMessage ="Username-ul trebuie sa aiba 3 caractere")]
+            public string Username { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
