@@ -7,8 +7,8 @@
 }
 
 <br />
-<h2 class="text-white text-center">Bookmarks</h2>
-<form method="GET">
+<h2 class="text-white text-center">Pagina Principala</h2>
+@*<form method="GET" asp-controller="Bookmarks" asp-action="Index">
     <div class="input-group mb-3">
         <input type="text" class="form-control"
                placeholder="Search topics or keywords" name="search"
@@ -18,11 +18,11 @@
             Search
         </button>
     </div>
-</form>
+</form>*@
 <br />
 @if (ViewBag.Bookmarks == null)
 {
-    <a class="a-tw" href="Bookmarks/DateOrLike/1"><h2>Most recent Bookmarks</h2></a>
+    <a class="a-tw" href="Bookmarks/DateOrLike/1"><h2>Postari Recente</h2></a>
     <br />
     @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksDate)
     {
@@ -38,7 +38,7 @@
 
     <br /><br />
 
-    <a class="a-tw" href="Bookmarks/DateOrLike/2"><h2>Most liked Bookmarks</h2></a>
+    <a class="a-tw" href="Bookmarks/DateOrLike/2"><h2>Postari Populare</h2></a>
     <br />
     @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksLike)
     {

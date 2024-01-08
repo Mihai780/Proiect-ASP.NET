@@ -37,18 +37,21 @@
                             </li>
                         }
                         
-                    </ul>
-                    <form method="GET">
+                    
+                    <li class="nav-item">
+                    <form method="GET" asp-controller="Bookmarks" asp-action="Index">
                         <div class="input-group mb-3">
                             <input type="text" class="form-control"
-                                   placeholder="Search topics or keywords" name="search"
+                                   placeholder="Cauta o postare" name="search"
                                    value="@ViewBag.SearchString">
-                            <button class="btn btn-outline-success"
+                            <button class="btn btn-outline-success btn-edit-outline"
                                     type="submit">
                                 Search
                             </button>
                         </div>
                     </form>
+                    </li>
+                    </ul>
                     <partial name="_LoginPartial" />
   
                 </div>

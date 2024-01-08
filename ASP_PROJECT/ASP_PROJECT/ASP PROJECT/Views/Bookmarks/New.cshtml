@@ -4,41 +4,49 @@
     ViewBag.Title = "New";
 }
 
-<h2 class="text-white text-center">Adaugare bookmark</h2>
+<h2 class="text-white text-center">Creeaza o postare!</h2>
 <br />
 <div class="text-white">
 <form method="post" action="/Bookmarks/New">
+   @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+   <div class="container">
+   <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    @Html.Label("Content","Content bookmark")
+                    <br />
+                    @Html.TextArea("Content",null,new{placeholder="Adaugati continut", @class="form-control"})
+                    <br />@Html.ValidationMessageFor(m => m.Content, "Continutul trebuie sa existe", new { @class = "text-danger" })<br />
+                 </div>
+            </div>
+    <div class="col-md-6 d-flex flex-column">
+    
 
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-    @Html.Label("Title","Titlu bookmark")
-    <br />
-    @Html.TextBox("Title",null,new{@class="form-control"})
+        @Html.Label("Title","Titlu bookmark")
         <br />
-        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+        @Html.TextBox("Title",null,new{placeholder="Introduceti un titlu", @class="form-control"})
+        <br />
+        @Html.ValidationMessageFor(m => m.Title, "Titlul este obligatoriu", new { @class = "text-danger" })
         <br />
     
 
-    @Html.Label("Description","Descriere bookmark")
-    <br />
-    @Html.TextArea("Description",null,new {@class="form-control"})
-        <br />@Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })<br />
+        @Html.Label("Description","Descriere bookmark")
+        <br />
+        @Html.TextBox("Description",null,new {placeholder="Adaugati o descriere", @class="form-control"})
+        <br />@Html.ValidationMessageFor(m => m.Description, "Trebuie sa existe o descriere", new { @class = "text-danger" })<br />
+
+        <label>Selectati categoria</label>
+        @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
+        "Adaugati intr-o categorie(optional)", new { @class = "form-control" })
     
-
-    @Html.Label("Content","Content bookmark")
-    <br />
-    @Html.TextArea("Content",null,new{@class="form-control"})
-        <br />@Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })<br />
-    
-
-   <label>Selectati categoria</label>
-    @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),
-    "Selectati categoria", new { @class = "form-control" })
-
     <br/>
+            <button class="btn btn-success" type="submit">Adauga bookmark</button>
+     </div>
 
-    <button class="btn btn-success" type="submit">Adauga bookmark</button>
-
+    
+    </div>
+    </div>
+ 
 </form>
-
 </div>
+

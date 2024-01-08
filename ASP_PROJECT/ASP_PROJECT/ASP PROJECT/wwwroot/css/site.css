@@ -43,6 +43,18 @@ a.nav-link:hover,button.nav-link:hover {
         color: #d61609 !important;
     }
 
+.btn-edit-outline {
+    color: whitesmoke !important;
+    border: 2px solid #d61609;
+}
+
+.btn-edit-outline:hover {
+        border: 2px solid #d61609;
+        border-radius:2px;
+        background-color: gray !important;
+        color: #d61609 !important;
+    }
+
 .border-white{
     border: 2px solid white;
     border-radius: 2px;

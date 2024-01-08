@@ -8,7 +8,7 @@
 
     <div class="card-body d-flex justify-content-between flex-column text-white">
         <div>
-            <p><i class="bi bi-person"> </i> Username: @Model.UserName</p>
+            <p style="20px"><i class="bi bi-person"> </i> Username: @Model.UserName</p>
 
             <p><i class="bi bi-envelope"></i> Email utilizator: @Model.Email</p>
 
@@ -57,16 +57,23 @@
                     <div class="col-12">
                         <div class="card" style="width: 100%;">
 
-                            
+                            <div class="card-body m-2">
 
                                 @Html.Partial("BookmarkInfo", @bm)
 
-                            
+                            </div>
                         </div>
                     </div>
                 </a>
             }
 
+        }
+        else
+        {
+        <div class="card-body d-flex justify-content-between">
+            <p class="text-white">Momentan nu ai postari salvate!</p>
+            <a class="btn-success m-2" href="/Bookmarks/Index">Cauta postari!</a>
+           </div>
         }
     </div>
         @*
