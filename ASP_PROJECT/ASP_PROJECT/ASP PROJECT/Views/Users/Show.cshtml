@@ -44,6 +44,9 @@
            
             
         </div>
+    </div>
+    </div>
+    <div class="" d-flex align-items-center"">
         <h3 class="text-white"> Postari salvate </h3>
 
         @if (userposts.Count>0)
@@ -54,17 +57,18 @@
                     <div class="col-12">
                         <div class="card" style="width: 100%;">
 
-                            <div class="card-body m-2">
+                            
 
                                 @Html.Partial("BookmarkInfo", @bm)
 
-                            </div>
+                            
                         </div>
                     </div>
                 </a>
             }
 
         }
+    </div>
         @*
         @if (Model.Categories.Count > 0)
         {
@@ -91,8 +95,8 @@
 
             }
         }*@
-    </div>
-</div>
+    
+
 
 
 

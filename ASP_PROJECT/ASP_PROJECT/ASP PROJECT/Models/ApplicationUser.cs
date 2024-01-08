@@ -14,12 +14,8 @@ namespace ASP_PROJECT.Models
 
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-
-        [Required]
-        [Display(Name = "Username")]
-        [StringLength(25, ErrorMessage = "Username must not be longer than 15 charcters")]
-        [MinLength(3, ErrorMessage = "Username-ul trebuie sa aiba 3 caractere")]
-        public string Username { get; set; }
+        public string? Nickname { get; set; }
+        public byte[]? ProfilePic { get; set; }
 
         [NotMapped]
         public IEnumerable<SelectListItem>? AllRoles { get; set; }

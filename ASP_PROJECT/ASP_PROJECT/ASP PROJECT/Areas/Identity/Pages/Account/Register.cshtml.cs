@@ -71,6 +71,7 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -79,12 +80,6 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
-
-            [Required]
-            [Display(Name ="Username")]
-            [StringLength(25,ErrorMessage ="Username must not be longer than 15 charcters")]
-            [MinLength(3,ErrorMessage ="Username-ul trebuie sa aiba 3 caractere")]
-            public string Username { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -104,6 +99,14 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [StringLength(20, ErrorMessage = "Username-ul trebuie sa fie intre 3 si 20 de caractere!", MinimumLength = 3)]
+            [Display(Name = "Username/Porecla")]
+            public string Nickname { get; set; }
+
+            [Display(Name = "Poza de Profil")]
+            public byte[] ProfilePic { get; set; }
         }
 
 
@@ -117,12 +120,30 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            var pfp = Input.ProfilePic;
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
 
+                user.Nickname = Input.Nickname;
+
+                if (Request.Form.Files.Count > 0)
+                {
+
+
+                    IFormFile file = Request.Form.Files.FirstOrDefault();
+                    using (var dataStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(dataStream);
+                        user.ProfilePic = dataStream.ToArray();
+                    }
+                    await _userManager.UpdateAsync(user);
+                }
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+               
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
