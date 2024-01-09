@@ -2,7 +2,7 @@
     ViewBag.Title = "Lista categorii";
 }
 <br />
-<h2 class="text-center text-white">@ViewBag.Title</h2>
+<h2 class="text-center text-white lead" style="font-size:30px">@ViewBag.Title</h2>
 <br />  
 
 @if (TempData.ContainsKey("message"))
@@ -12,7 +12,7 @@
 
 <br />
 
-<div class="align-items-center justify-content-center d-flex">
+<div class="align-items-center justify-content-left d-flex">
     <a class="btn btn-success" href="/Categories/New">Adauga o noua categorie</a>
 </div>
 
@@ -21,14 +21,14 @@
 <div class="text-white">
 @foreach (var category in ViewBag.Categories)
 {
-    @Html.Label("CategoryName", "Denumire categorie")
+    @Html.Label("CategoryName", "Denumire categorie", new{@class="lead"})
     <p class="text-white">@category.CategoryName</p>
     @if(category.Description !=null)
     {
-        @Html.Label("Description", "Descriere categorie")
+        @Html.Label("Description", "Descriere categorie",new{@class="lead"})
         <p class="text-white">@category.Description</p>
     }
-    <a class="btn alert-success" href="/Categories/Show/@category.Id">Afisare categorie</a>
+    <a class="btn alert-success" href="/Categories/Show/@category.Id">Postari din categorie</a>
     <a class="btn alert-success" href="/Categories/Edit/@category.Id">Editare categorie</a>
     @*<a class="btn alert-success" href="/Categories/Delete/@category.Id">Stergere categorie</a>*@
     <br />

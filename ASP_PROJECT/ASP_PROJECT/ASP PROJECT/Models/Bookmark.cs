@@ -8,9 +8,14 @@ namespace ASP_PROJECT.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required(ErrorMessage ="Titlul este obligatoriu")]
         public string Title { get; set; }
+
+        [Required(ErrorMessage ="Descrierea este obligatorie")]
         public string Description { get; set; }
-        
+
+        [Required(ErrorMessage ="Continutul trebuie sa existe")]
         public string Content { get; set; }
         public DateTime Date { get; set; }
 

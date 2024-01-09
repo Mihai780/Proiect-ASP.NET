@@ -4,7 +4,7 @@
     ViewBag.Title = "New";
 }
 
-<h2 class="text-white text-center">Creeaza o postare!</h2>
+<h2 class="text-center text-white lead" style="font-size:30px">Creeaza o postare</h2>
 <br />
 <div class="text-white">
 <form method="post" action="/Bookmarks/New">
@@ -16,7 +16,7 @@
                     @Html.Label("Content","Content bookmark")
                     <br />
                     @Html.TextArea("Content",null,new{placeholder="Adaugati continut", @class="form-control"})
-                    <br />@Html.ValidationMessageFor(m => m.Content, "Continutul trebuie sa existe", new { @class = "text-danger" })<br />
+                    <br />@Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })<br />
                  </div>
             </div>
     <div class="col-md-6 d-flex flex-column">
@@ -26,14 +26,14 @@
         <br />
         @Html.TextBox("Title",null,new{placeholder="Introduceti un titlu", @class="form-control"})
         <br />
-        @Html.ValidationMessageFor(m => m.Title, "Titlul este obligatoriu", new { @class = "text-danger" })
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
         <br />
     
 
         @Html.Label("Description","Descriere bookmark")
         <br />
         @Html.TextBox("Description",null,new {placeholder="Adaugati o descriere", @class="form-control"})
-        <br />@Html.ValidationMessageFor(m => m.Description, "Trebuie sa existe o descriere", new { @class = "text-danger" })<br />
+        <br />@Html.ValidationMessageFor(m => m.Description, null, new { @class = "text-danger" })<br />
 
         <label>Selectati categoria</label>
         @Html.DropDownListFor(m => m.CategoryId, new SelectList(Model.Categ, "Value", "Text"),

@@ -4,7 +4,7 @@
 }
 
 
-<h2 class="text-white">@ViewBag.Title</h2>
+<h2 class="text-center text-white lead" style="font-size:30px">@ViewBag.Title</h2>
 
 <br />
 
@@ -55,6 +55,13 @@
             </div>
         </div>
     }
+}
+else
+{
+    <div class="card" style="width: 100%;">
+        <p class="text-white">Momentan nu ai postari salvate in aceasta categorie!</p>
+        <a class="bth btn-success" href="/Bookmarks/Index">Cauta postari!</a>
+    </div>
 }
 <br />
 <hr />

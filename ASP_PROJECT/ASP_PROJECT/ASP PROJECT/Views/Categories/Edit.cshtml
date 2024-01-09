@@ -5,7 +5,7 @@
     ViewBag.Title = "Editare categorie";
 }
 
-<h2 class="text-white">@ViewBag.Title</h2>
+<h2 class="text-center text-white lead" style="font-size:30px">@ViewBag.Title</h2>
 
 <div class="text-white">
 @using (Html.BeginForm(controllerName: "Categories", actionName: "Edit", method: FormMethod.Post,routeValues: new { id = Model.Id }))

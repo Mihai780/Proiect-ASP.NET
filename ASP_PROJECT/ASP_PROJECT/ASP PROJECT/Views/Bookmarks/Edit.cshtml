@@ -1,6 +1,6 @@
 ﻿@model ASP_PROJECT.Models.Bookmark
 
-<h2 class="text-center mt-5 text-white">Editare bookmark</h2>
+<h2 class="text-center text-white lead" style="font-size:30px">Editeaza Postarea</h2>
 
 <br />
 
@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div class="col-6">
-                <div class="mb-3">
+                    <div class="mb-3 style="width: 30%">
                     @Html.Label("Content","Content bookmark")
                     <br />
                      @Html.TextArea("Content",new { htmlAttributes = new {@class="form-control"}})

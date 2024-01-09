@@ -6,8 +6,13 @@
        method: FormMethod.Post, routeValues: new { id = @Model.Id }))
 {
 
+    @Html.Label("Nickname", "Nickname utilizator", new { @class = "lead" })
+
+    <br />
+
+    @Html.EditorFor(m => m.Nickname)
     <i class="bi bi-person"></i>
-    @Html.Label("UserName", "Nume utilizator", new { @class = "" })
+    @Html.Label("UserName", "Nume utilizator", new { @class = "lead" })
 
     <br />
 
@@ -17,7 +22,7 @@
 
     <i class="bi bi-envelope"></i>
     
-    @Html.Label("Email", "Email utilizator", new { @class = "" })
+    @Html.Label("Email", "Email utilizator", new { @class = "lead" })
 
     <br />
 

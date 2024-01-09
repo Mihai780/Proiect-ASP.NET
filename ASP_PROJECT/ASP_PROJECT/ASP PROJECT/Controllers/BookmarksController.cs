@@ -28,6 +28,8 @@ namespace ASP_PROJECT.Controllers
 
             _roleManager = roleManager;
         }
+
+        [Authorize(Roles ="User,Admin")]
         public IActionResult LikeUD(int id, string userid)
         {
             Bookmark bookmark = db.Bookmarks.Include("User")
@@ -35,20 +37,24 @@ namespace ASP_PROJECT.Controllers
                                .Include("Comments.User")
                                .Where(bok => bok.Id == id)
                                .First();
-
-            if (TempData.ContainsKey(id.ToString() + userid))
+            if (User.IsInRole("User") || User.IsInRole("Admin"))
             {
-                bookmark.Likes--;
-                TempData.Remove(id.ToString() + userid);
-            }
+                if (TempData.ContainsKey(id.ToString() + userid))
+                {
+                    bookmark.Likes--;
+                    TempData.Remove(id.ToString() + userid);
+                }
 
-            else
-            {
-                bookmark.Likes++;
-                TempData[id.ToString() + userid] = "Liked";
+                else
+                {
+                    bookmark.Likes++;
+                    TempData[id.ToString() + userid] = "Liked";
+                }
+                db.SaveChanges();
             }
+            
             ViewBag.message = "Buna";
-            db.SaveChanges();
+            
             return Redirect("/Bookmarks/Show/" + id);
         }
         public IActionResult DateOrLike(int id)
