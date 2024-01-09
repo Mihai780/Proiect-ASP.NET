@@ -28,22 +28,51 @@ namespace ASP_PROJECT.Controllers
 
             _roleManager = roleManager;
         }
+        public IActionResult LikeUD(int id, string userid)
+        {
+            Bookmark bookmark = db.Bookmarks.Include("User")
+                               .Include("Comments")
+                               .Include("Comments.User")
+                               .Where(bok => bok.Id == id)
+                               .First();
+
+            if (TempData.ContainsKey(id.ToString() + userid))
+            {
+                bookmark.Likes--;
+                TempData.Remove(id.ToString() + userid);
+            }
+
+            else
+            {
+                bookmark.Likes++;
+                TempData[id.ToString() + userid] = "Liked";
+            }
+            ViewBag.message = "Buna";
+            db.SaveChanges();
+            return Redirect("/Bookmarks/Show/" + id);
+        }
         public IActionResult DateOrLike(int id)
         {
-            if(id==1)
+            var bookmarks = from bookmark in db.Bookmarks.Include("User") select bookmark;
+
+            if (id == 1 || (TempData.ContainsKey("D") && id!=2))
             {
-                var bookmarks = from bookmark in db.Bookmarks.Include("User")
-                                     orderby bookmark.Date descending
-                                     select bookmark;
-                ViewBag.Bookmarks = bookmarks;
+                bookmarks = from bookmark in db.Bookmarks.Include("User")
+                            orderby bookmark.Date descending
+                            select bookmark;
+                TempData["D"] = 1;
+                TempData.Remove("L");
             }
             else
             {
-                var bookmarks = from bookmark in db.Bookmarks.Include("User")
-                                     orderby bookmark.Likes descending
-                                     select bookmark;
-                ViewBag.Bookmarks = bookmarks;
+
+                bookmarks = from bookmark in db.Bookmarks.Include("User")
+                            orderby bookmark.Likes descending
+                            select bookmark;
+                TempData["L"] = 1;
+                TempData.Remove("D");
             }
+
             var search = "";
             if (Convert.ToString(HttpContext.Request.Query["search"]) != null)
             {
@@ -52,13 +81,43 @@ namespace ASP_PROJECT.Controllers
                                      bm => bm.Title.Contains(search) || bm.Content.Contains(search) || bm.Description.Contains(search)
                                       ).Select(bm => bm.Id).ToList();
 
-                var bookmarks = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
+                bookmarks = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
                                .Include("User")
                               .OrderBy(b => b.Title);
                 ViewBag.Bookmarks = bookmarks;
-                return View(); //de sters dupa ce se face paginarea;        
+                //return View(); //de sters dupa ce se face paginarea;        
             }
             ViewBag.SearchString = search;
+
+            int _perPage = 10;
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message = TempData["message"].ToString();
+                ViewBag.alert = TempData["messagetype"];
+            }
+
+
+            int totalItems = bookmarks.Count();
+
+
+            var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
+
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset = (currentPage - 1) * _perPage;
+            }
+
+            var paginatedbookmarks = bookmarks.Skip(offset).Take(_perPage);
+
+            ViewBag.Nr = paginatedbookmarks.Count();
+
+            ViewBag.lastPage = Math.Ceiling((float)totalItems / (float)_perPage);
+
+            ViewBag.Bookmarks = paginatedbookmarks;
+
             return View();
         }
         public IActionResult Index()
@@ -73,7 +132,7 @@ namespace ASP_PROJECT.Controllers
                                  orderby bookmark.Date descending
                                  select bookmark).Take(5);
             var bookmarkslike = (from bookmark in db.Bookmarks.Include("User")
-                                 orderby bookmark.Date descending
+                                 orderby bookmark.Likes descending
                                  select bookmark).Take(5);
 
             //spatiu pt sortare dupa like-uri
