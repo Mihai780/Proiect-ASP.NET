@@ -14,7 +14,7 @@
                     <div class="mb-3 style="width: 30%">
                     @Html.Label("Content","Content bookmark")
                     <br />
-                     @Html.TextArea("Content",new { htmlAttributes = new {@class="form-control"}})
+                     @Html.TextArea("Content",null,new { @class = "summernote"} )
                      <br />
                      @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
 

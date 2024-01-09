@@ -1,10 +1,12 @@
 ﻿using ASP_PROJECT.Data;
 using ASP_PROJECT.Models;
+using Ganss.Xss;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace ASP_PROJECT.Controllers
 {
@@ -68,6 +70,7 @@ namespace ASP_PROJECT.Controllers
                             select bookmark;
                 TempData["D"] = 1;
                 TempData.Remove("L");
+                ViewBag.NumeSite = "Postari Recente";
             }
             else
             {
@@ -77,6 +80,7 @@ namespace ASP_PROJECT.Controllers
                             select bookmark;
                 TempData["L"] = 1;
                 TempData.Remove("D");
+                ViewBag.NumeSite = "Postari Populare";
             }
 
             var search = "";
@@ -192,6 +196,7 @@ namespace ASP_PROJECT.Controllers
 
             SetAccessRights();
 
+
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.Message = TempData["message"];
@@ -280,8 +285,13 @@ namespace ASP_PROJECT.Controllers
         [HttpPost]
         public IActionResult New(Bookmark bookmark)
         {
+            var sanitizer = new HtmlSanitizer();
             if (ModelState.IsValid)
             {
+
+                //bookmark.Content = sanitizer.Sanitize(bookmark.Content);
+                //bookmark.Content = (bookmark.Content);    nu afiseaza
+
                 bookmark.UserId = _userManager.GetUserId(User);
                 bookmark.Date = DateTime.Now;
                 bookmark.Likes = 0;

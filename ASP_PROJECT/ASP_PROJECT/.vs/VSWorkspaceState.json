@@ -5,8 +5,10 @@
     "\\ASP PROJECT\\Views",
     "\\ASP PROJECT\\Views\\Bookmarks",
     "\\ASP PROJECT\\Views\\Categories",
-    "\\ASP PROJECT\\Views\\Comments"
+    "\\ASP PROJECT\\Views\\Comments",
+    "\\ASP PROJECT\\Views\\Shared",
+    "\\ASP PROJECT\\Views\\Users"
   ],
-  "SelectedNode": "\\ASP PROJECT\\Views\\Bookmarks\\New.cshtml",
+  "SelectedNode": "\\ASP PROJECT\\Views\\Bookmarks\\Show.cshtml",
   "PreviewInSolutionExplorer": false
 }

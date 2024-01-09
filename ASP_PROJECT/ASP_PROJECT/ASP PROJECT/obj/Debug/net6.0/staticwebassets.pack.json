@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP_PROJECT\\ASP PROJECT\\wwwroot\\js\\Summernote.js",
+      "PackagePath": "staticwebassets\\js\\Summernote.js"
+    },
+    {
       "Id": "C:\\Users\\mihai\\OneDrive\\Documents\\GitHub\\Proiect-ASP.NET\\ASP_PROJECT\\ASP_PROJECT\\ASP PROJECT\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

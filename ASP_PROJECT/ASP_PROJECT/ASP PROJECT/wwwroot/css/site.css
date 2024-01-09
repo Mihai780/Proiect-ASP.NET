@@ -67,17 +67,54 @@ a.nav-link:hover,button.nav-link:hover {
 .a-tw{
     text-decoration:none;
     color:white;
+    display:flex;
+    justify-contente:center;
 }
 a.a-tw:hover{
-    color:white;
+    
+    color:maroon;
 }
 
 .containerr{
-    width:40%;
+    width:50%;
     height:40%;
 }
 
 .comentariu{
     color:white;
     overflow:hidden;
+}
+
+.ov{
+    overflow:hidden;
+}
+
+.note-editor .dropdown-toggle::after {
+    display: none;
+}
+
+.heart {
+    content: '&#9829';
+    color:maroon;
+}
+
+.box_total_6 {
+    height: 800px;
+    flex: 1 1 auto;
+    padding: 1rem 1rem;
+}
+
+.box_total_4{
+}
+
+.box_total {
+    display: grid;
+    position:absolute;
+    right:20px;
+    grid-template-columns: 800px 700px;
+}
+
+.img{
+    width:400px;
+    height:700px;
 }

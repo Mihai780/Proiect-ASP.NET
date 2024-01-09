@@ -15,16 +15,18 @@
                 <div class="mb-3">
                     @Html.Label("Content","Content bookmark")
                     <br />
-                    @Html.TextArea("Content",null,new{placeholder="Adaugati continut", @class="form-control"})
-                    <br />@Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })<br />
-                 </div>
+                    @Html.TextArea("Content", null, new { @class = "summernote" })
+                    <br />
+                    @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+                    <br />
+                </div>
             </div>
     <div class="col-md-6 d-flex flex-column">
     
 
         @Html.Label("Title","Titlu bookmark")
         <br />
-        @Html.TextBox("Title",null,new{placeholder="Introduceti un titlu", @class="form-control"})
+        @Html.TextBox("Title","",new{placeholder="Introduceti un titlu", @class="form-control"})
         <br />
         @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
         <br />
