@@ -2,9 +2,10 @@
 
 
 <div class="text-white">
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Users",
-       method: FormMethod.Post, routeValues: new { id = @Model.Id }))
-{
+<form asp-controller="Users" asp-action="Edit" method="post" enctype="multipart/form-data">
+<input type="hidden" value=@Model.Id />
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
     @Html.Label("Nickname", "Nickname utilizator", new { @class = "lead" })
 
@@ -12,16 +13,8 @@
 
     @Html.EditorFor(m => m.Nickname)
     <br />
-    <i class="bi bi-person"></i>
-    @Html.Label("UserName", "Nume utilizator", new { @class = "lead" })
-
+    @Html.ValidationMessageFor(m => m.Nickname, null, new { @class = "text-danger" })
     <br />
-
-    @Html.EditorFor(m => m.UserName)
-
-    <br />
-
-    <i class="bi bi-envelope"></i>
     
     @Html.Label("Email", "Email utilizator", new { @class = "lead" })
 
@@ -30,6 +23,8 @@
     @Html.EditorFor(m => m.Email)
 
     <br />
+    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+    <br/>
 
     <i class="bi bi-phone"></i>
     @Html.Label("PhoneNumber", "Numar telefon")
@@ -66,11 +61,32 @@
 
         <br />
     }
-   
+    <input type="hidden" name="newRole" value="@ViewBag.UserRole" />
 
+    @Html.Label("ProfilePic", "Poza de Profil", new { @class = "" })
+
+    <br />
+        @if (Model.ProfilePic != null)
+        {
+            <img id="imgPicture" style="width:300px;height:300px; object-fit:cover" src="data:image/*;base64,@(Convert.ToBase64String(@Model.ProfilePic))">
+        }
+        else
+        {
+            <img id="imgPicture" style="width:300px;height:300px; object-fit:cover" src="">
+        }
+        <br />
+
+    @Html.TextBoxFor(m=>m.ProfilePic, new {type="file",
+                           accept=".png,.jpg,.jpeg,.gif,.tif",
+                           @class="form-control",
+                           style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;",
+                           onchange="document.getElementById('imgPicture').src=window.URL.createObjectURL(this.files[0])}"})
+    
+
+    <br />
+    @Html.ValidationMessageFor(m => m.ProfilePic, null, new { @class = "text-danger" })
+    <br />
     <button class="btn btn-sm btn-success" type="submit">Editare user</button>
-
-
-}
+</form>
 </div>
 

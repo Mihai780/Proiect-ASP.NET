@@ -89,20 +89,17 @@ namespace ASP_PROJECT.Controllers
             if (User.IsInRole("Admin") || _userManager.GetUserId(User).ToString()==id)
             {
                 ApplicationUser user = db.Users.Find(id);
-                if (User.IsInRole("Admin"))
-                {
-                    user.AllRoles = GetAllRoles();
 
-                    var roleNames = await _userManager.GetRolesAsync(user); // Lista de nume de roluri
+                user.AllRoles = GetAllRoles();
 
-                    // Cautam ID-ul rolului in baza de date
-                    var currentUserRole = _roleManager.Roles
-                                                      .Where(r => roleNames.Contains(r.Name))
-                                                      .Select(r => r.Id)
-                                                      .First(); // Selectam 1 singur rol
-                    ViewBag.UserRole = currentUserRole;
-                }
-               
+                var roleNames = await _userManager.GetRolesAsync(user); 
+
+                var currentUserRole = _roleManager.Roles
+                                                  .Where(r => roleNames.Contains(r.Name))
+                                                  .Select(r => r.Id)
+                                                  .First(); 
+                ViewBag.UserRole = currentUserRole;
+      
                 return View(user);
             }        
             else
@@ -115,7 +112,7 @@ namespace ASP_PROJECT.Controllers
 
         [Authorize(Roles ="Admin, User")]
         [HttpPost]
-        public async Task<ActionResult> Edit(string id, ApplicationUser newData, [FromForm] string newRole)
+        public async Task<IActionResult> Edit(string id, ApplicationUser newData, [FromForm] string newRole)
         {
             ApplicationUser user = db.Users.Find(id);
 
@@ -125,12 +122,22 @@ namespace ASP_PROJECT.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    user.UserName = newData.UserName;
                     user.Email = newData.Email;
                     user.FirstName = newData.FirstName;
                     user.LastName = newData.LastName;
                     user.PhoneNumber = newData.PhoneNumber;
                     user.Nickname = newData.Nickname;
+
+                    if (Request.Form.Files.Count > 0)
+                    {
+                        IFormFile file = Request.Form.Files.FirstOrDefault();
+                        using (var dataStream = new MemoryStream())
+                        {
+                            await file.CopyToAsync(dataStream);
+                            user.ProfilePic = dataStream.ToArray();
+                        }
+                        await _userManager.UpdateAsync(user);
+                    }
 
 
                     if (User.IsInRole("Admin"))
@@ -144,17 +151,31 @@ namespace ASP_PROJECT.Controllers
                         var roleName = await _roleManager.FindByIdAsync(newRole);
                         await _userManager.AddToRoleAsync(user, roleName.ToString());
                     }
-
-
                     db.SaveChanges();
-                    TempData["message"] = "Utilizator sters";
+                    TempData["message"] = "Utilizator editat";
                     TempData["messageType"] = "alert-success";
+                    if (User.IsInRole("Admin"))
+                        return Redirect("/Users/Index");
+                    else
+                        return Redirect("/Users/Show/" + id);
 
                 }
-                if (User.IsInRole("Admin"))
-                    return Redirect("/Users/Index");
                 else
-                    return Redirect("/Users/Show/" + id);
+                {
+
+                    newData.AllRoles = GetAllRoles();
+
+                    var roleNames = await _userManager.GetRolesAsync(newData);
+
+                    var currentUserRole = _roleManager.Roles
+                                                      .Where(r => roleNames.Contains(r.Name))
+                                                      .Select(r => r.Id)
+                                                      .First();
+                    ViewBag.UserRole = currentUserRole;
+
+                    return View(newData);
+                }
+
             }
             else
             {
@@ -210,6 +231,8 @@ namespace ASP_PROJECT.Controllers
                 db.ApplicationUsers.Remove(user);
 
                 db.SaveChanges();
+                TempData["message"] = "Utilizator sters";
+                TempData["messageType"] = "alert-success";
 
                 return RedirectToAction("Index");
             }

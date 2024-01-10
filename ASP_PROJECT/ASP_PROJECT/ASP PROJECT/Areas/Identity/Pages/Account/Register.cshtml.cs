@@ -120,7 +120,7 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            var pfp = Input.ProfilePic;
+
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -129,8 +129,6 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
 
                 if (Request.Form.Files.Count > 0)
                 {
-
-
                     IFormFile file = Request.Form.Files.FirstOrDefault();
                     using (var dataStream = new MemoryStream())
                     {
@@ -160,6 +158,7 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
                         pageHandler: null,
                         values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
+
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");

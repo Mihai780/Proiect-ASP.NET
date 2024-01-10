@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
 
 namespace ASP_PROJECT.Areas.Identity.Pages.Account
 {
@@ -22,6 +23,7 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger)
         {
@@ -84,6 +86,18 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
+        public bool IsValidEmail(string emailaddress)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(emailaddress);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -110,6 +124,7 @@ namespace ASP_PROJECT.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);

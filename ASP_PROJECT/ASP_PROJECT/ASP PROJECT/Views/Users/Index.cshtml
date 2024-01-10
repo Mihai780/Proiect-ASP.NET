@@ -1,6 +1,9 @@
 ﻿<br />
 <br />
-
+@if (ViewBag.message != null)
+{
+    <h2 class=@TempData["messageType"]>@TempData["message"]</h2>
+}
 <div class="row">
     @foreach (var user in ViewBag.UsersList)
     {
