@@ -2,9 +2,14 @@
 
 <br />
 
+@if (ViewBag.message != null)
+{
+    <h2 class=@ViewBag.messageType>@ViewBag.message</h2>
+}
+
 <div class="d-flex justify-content-center">
 
-    <a class="btn btn-outline-success" asp-area="" asp-controller="Bookmarks" asp-action="Index">Afisare bookmarks</a>
+    <a class="btn btn-outline-success" asp-area="" asp-controller="Bookmarks" asp-action="Index">Inapoi la Pagina Principala</a>
     @if (ViewBag.AfisareButoane || ViewBag.EsteAdmin)
     {
         <a class="btn btn-outline-success" href="/Bookmarks/New">Adauga bookmark</a>
@@ -30,7 +35,7 @@
 
                     <div class="card-text">@Model.Description</div>
 
-                    <div><i class="bi bi-person"></i> @Model.User.UserName</div>
+                    <div><i class="bi bi-person"></i><a class="nav-link" href="/Users/Show/@Model.UserId"> @Model.User.Nickname </a> </div>
 
                     <div class="alert-success">@Model.Date</div>
 

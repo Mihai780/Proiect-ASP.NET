@@ -23,16 +23,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookmarks" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookmarks" asp-action="Index">Acasa</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookmarks" asp-action="New">Create</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Bookmarks" asp-action="New">Creeaza o Postare</a>
                         </li>
                         @if (User.IsInRole("User") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Afisare Categorii</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Categorii</a>
                             </li>
                         }
                       
@@ -42,8 +42,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Lista Useri</a>
                             </li>
                         }
-                        
-                    
+                                    
                     <li class="nav-item">
                     <form method="GET" asp-controller="Bookmarks" asp-action="Index">
                         <div class="input-group mb-3">

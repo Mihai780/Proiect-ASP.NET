@@ -64,11 +64,11 @@ a.nav-link:hover,button.nav-link:hover {
     padding-bottom: 30px;
 }
 
-.a-tw{
-    text-decoration:none;
-    color:white;
-    display:flex;
-    justify-contente:center;
+.a-tw {
+    text-decoration: none;
+    color: whitesmoke;
+    display: flex;
+    justify-contente: center;
 }
 a.a-tw:hover{
     
@@ -114,7 +114,7 @@ a.a-tw:hover{
     grid-template-columns: 800px 700px;
 }
 
-.img{
-    width:400px;
-    height:700px;
+.img {
+    width: 300px !important;
+    height: 300px !important;
 }

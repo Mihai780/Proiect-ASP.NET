@@ -130,25 +130,25 @@ namespace ASP_PROJECT.Controllers
                     user.FirstName = newData.FirstName;
                     user.LastName = newData.LastName;
                     user.PhoneNumber = newData.PhoneNumber;
+                    user.Nickname = newData.Nickname;
 
 
-                    // Cautam toate rolurile din baza de date
                     if (User.IsInRole("Admin"))
                     {
                         var roles = db.Roles.ToList();
 
                         foreach (var role in roles)
                         {
-                            // Scoatem userul din rolurile anterioare
                             await _userManager.RemoveFromRoleAsync(user, role.Name);
                         }
-                        // Adaugam noul rol selectat
                         var roleName = await _roleManager.FindByIdAsync(newRole);
                         await _userManager.AddToRoleAsync(user, roleName.ToString());
                     }
 
 
                     db.SaveChanges();
+                    TempData["message"] = "Utilizator sters";
+                    TempData["messageType"] = "alert-success";
 
                 }
                 if (User.IsInRole("Admin"))
@@ -171,7 +171,7 @@ namespace ASP_PROJECT.Controllers
         [HttpPost]
         public IActionResult Delete(string id)
         {
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") && _userManager.GetUserId(User).ToString() != id)
             {
                 var user = db.Users
                         .Include("Bookmarks")
@@ -211,6 +211,12 @@ namespace ASP_PROJECT.Controllers
 
                 db.SaveChanges();
 
+                return RedirectToAction("Index");
+            }
+            else if (User.IsInRole("Admin") && _userManager.GetUserId(User).ToString() == id)
+            {
+                TempData["message"] = "Nu cred ca ai vrea sa te stergi singur";
+                TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Index");
             }
             else

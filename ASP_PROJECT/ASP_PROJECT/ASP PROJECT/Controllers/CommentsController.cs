@@ -27,26 +27,6 @@ namespace ASP_PROJECT.Controllers
             _roleManager = roleManager;
         }
 
-        /*
-        [HttpPost]
-        public IActionResult New(Comment comm)
-        {
-            comm.Date = DateTime.Now;
-
-            try
-            {
-                db.Comments.Add(comm);
-                db.SaveChanges();
-                return Redirect("/Bookmarks/Show/" + comm.BookmarkId);
-            }
-
-            catch (Exception)
-            {
-                return Redirect("/Bookmarks/Show/" + comm.BookmarkId);
-            }
-
-        }
-        */
 
         [Authorize(Roles="User,Admin")]
         [HttpPost]
@@ -58,6 +38,8 @@ namespace ASP_PROJECT.Controllers
             {
                 db.Comments.Remove(comm);
                 db.SaveChanges();
+                TempData["message"] = "Comentariu sters cu succes";
+                TempData["messageType"] = "alert-success";
                 return Redirect("/Bookmarks/Show/" + comm.BookmarkId);
             }
             else
@@ -99,6 +81,9 @@ namespace ASP_PROJECT.Controllers
                     comm.Content = requestComment.Content;
 
                     db.SaveChanges();
+
+                    TempData["message"] = "Comentariu editat cu succes";
+                    TempData["messageType"] = "alert-success";
 
                     return Redirect("/Bookmarks/Show/" + comm.BookmarkId);
                 }

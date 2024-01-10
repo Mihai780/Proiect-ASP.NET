@@ -88,14 +88,25 @@ namespace ASP_PROJECT.Controllers
             {
                 search = Convert.ToString(HttpContext.Request.Query["search"]).Trim();
                 List<int> bookmarkID = db.Bookmarks.Where(
-                                     bm => bm.Title.Contains(search) || bm.Content.Contains(search) || bm.Description.Contains(search)
+                                     bm => bm.Title.Contains(search) || bm.Description.Contains(search)
                                       ).Select(bm => bm.Id).ToList();
 
-                bookmarks = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
+                List<int> CategoryID = db.Categories.Include("BookmarkCategories").Where(
+                                        cat=>cat.CategoryName.Contains(search)
+                                        ).Select(cat=>cat.Id).ToList();
+
+                List<int> categoryID = db.BookmarkCategories.Include("Category.User").Where(
+                        cat => cat.Category.CategoryName.Contains(search) && cat.Category.UserId == _userManager.GetUserId(User)
+                        && cat.Category != null
+                        ).Select(cat => (int)cat.BookmarkId).ToList();
+
+                List<int> mergedIds = bookmarkID.Union(categoryID).ToList();
+
+                bookmarks = db.Bookmarks.Where(bookmark => mergedIds.Contains(bookmark.Id))
                                .Include("User")
                               .OrderBy(b => b.Title);
                 ViewBag.Bookmarks = bookmarks;
-                //return View(); //de sters dupa ce se face paginarea;        
+       
             }
             ViewBag.SearchString = search;
 
@@ -145,9 +156,7 @@ namespace ASP_PROJECT.Controllers
                                  orderby bookmark.Likes descending
                                  select bookmark).Take(5);
 
-            //spatiu pt sortare dupa like-uri
 
-            //motor cautare TREBUIE SCHIMBAT VIEW-UL
             var search = "";
             if (Convert.ToString(HttpContext.Request.Query["search"]) !=null)
             {
@@ -156,22 +165,29 @@ namespace ASP_PROJECT.Controllers
                                      bm => bm.Title.Contains(search) || bm.Content.Contains(search) || bm.Description.Contains(search)
                                       ).Select(bm=>bm.Id).ToList();
 
-                var bookmarks = db.Bookmarks.Where(bookmark => bookmarkID.Contains(bookmark.Id))
+                List<int> categoryID = db.BookmarkCategories.Include("Category.User").Where(
+                                        cat => cat.Category.CategoryName.Contains(search) && cat.Category.UserId == _userManager.GetUserId(User)
+                                        && cat.Category!=null
+                                        ).Select(cat => (int)cat.BookmarkId).ToList();
+
+                List<int> mergedIds = bookmarkID.Union(categoryID).ToList();
+
+                var bookmarks = db.Bookmarks.Where(bookmark => mergedIds.Contains(bookmark.Id))
                                .Include("User")
                               .OrderBy(b => b.Title);
                 ViewBag.Bookmarks = bookmarks;
-                return View(); //de sters dupa ce se face paginarea;        
+                return View();         
             }
             ViewBag.SearchString = search;
             if (search != "")
             {
                 ViewBag.PaginationBaseUrl = "/Articles/Index/?search="
                 + search;
-                //+ "&page"; //dupa afisare paginata
+               
             }
             else
             {
-                ViewBag.PaginationBaseUrl = "/Articles/Index"; //Index/&page dupa paginare afisata
+                ViewBag.PaginationBaseUrl = "/Articles/Index"; 
             }
             ViewBag.BookmarksDate = bookmarksdate;
             ViewBag.BookmarksLike = bookmarkslike;
@@ -222,12 +238,9 @@ namespace ASP_PROJECT.Controllers
                 }
                 else
                 {
-                    // Adaugam asocierea intre articol si bookmark 
                     db.BookmarkCategories.Add(bookmarkCategory);
-                    // Salvam modificarile
                     db.SaveChanges();
 
-                    // Adaugam un mesaj de succes
                     TempData["message"] = "Bookmark-ul a fost adaugat in categoria selectata";
                     TempData["messageType"] = "alert-success";
                 }

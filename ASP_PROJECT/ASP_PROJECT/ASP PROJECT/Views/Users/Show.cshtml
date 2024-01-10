@@ -2,7 +2,18 @@
 @{
     List<Bookmark> userposts = ViewBag.UserPosts;
 }
-<h2 class="text-white"> Profilul tau! </h2>
+@if (ViewBag.message!=null)
+{
+    <h2 class=ViewBag.messageType>ViewBag.message</h2>
+}
+@if (Model.Id==ViewBag.UserCurent)
+{
+    <h2 class="text-white"> Profilul tau! </h2>
+}
+else
+{
+    <h2 class="text-white"> Profilul lui @Model.Nickname </h2>
+}
 <br/>
 <div class="card mt-3" style="height:100%; width: 100%;">
 
@@ -84,33 +95,7 @@
            </div>
         }
     </div>
-        @*
-        @if (Model.Categories.Count > 0)
-        {
-            @foreach (var category in Model.Categories)
-            {
-                @if (category.BookmarkCategories.Count > 0)
-                {
-                    @foreach (var bookmarkcat in category.BookmarkCategories)
-                    {
-                        <a class="btn btn-success m-2" href="/Bookmarks/Show/@bookmarkcat.BookmarkId">
-                        <div class="col-12">
-                            <div class="card" style="width: 100%;">
 
-                                <div class="card-body m-2">
-
-                                    @Html.Partial("BookmarkInfo", bookmarkcat.Bookmark)
-
-                                </div>
-                            </div>
-                        </div>
-                        </a>
-                    }
-                }
-
-            }
-        }*@
-    
 
 
 

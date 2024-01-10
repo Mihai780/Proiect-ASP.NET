@@ -1,7 +1,7 @@
 ﻿@model ASP_PROJECT.Models.Bookmark
 
 @{
-    ViewBag.Title = "New";
+    ViewBag.Title = "Creeaza o postare";
 }
 
 <h2 class="text-center text-white lead" style="font-size:30px">Creeaza o postare</h2>
@@ -15,7 +15,7 @@
                 <div class="mb-3">
                     @Html.Label("Content","Content bookmark")
                     <br />
-                    @Html.TextArea("Content", null, new { @class = "summernote" })
+                        @Html.TextArea("Content", null, new { @class = "summernote", style="background-color: whitesmoke;"})
                     <br />
                     @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
                     <br />

@@ -1,5 +1,8 @@
 ﻿@model ASP_PROJECT.Models.Bookmark
 
+@{
+    ViewBag.Title = "Acasa";
+}
 @if (ViewBag.message != null)
 {
 
@@ -12,7 +15,7 @@
 <br />
 @if (ViewBag.Bookmarks == null)
 {
-    <a class="a-tw" href="Bookmarks/DateOrLike/1"><h2>Postari Recente</h2></a>
+    <a class="a-tw nav-link" href="Bookmarks/DateOrLike/1"><h2>Postari Recente</h2></a>
     <br />
     @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksDate)
     {
@@ -28,7 +31,7 @@
 
     <br /><br />
 
-    <a class="a-tw" href="Bookmarks/DateOrLike/2"><h2>Postari Populare</h2></a>
+    <a class="a-tw nav-link" href="Bookmarks/DateOrLike/2"><h2>Postari Populare</h2></a>
     <br />
     @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.BookmarksLike)
     {
@@ -55,6 +58,13 @@ else
             <br />
         </a>
     }
+}
+@if (ViewBag.Bookmarks == null && ViewBag.BookmarksLike == null && ViewBag.BookmarksDate == null)
+{ 
+    <div class="card card-text">
+        <p class="text-white lead align-center">Nicio postare nu corespunde cautarii tale!</p>
+        <a class="btn btn-success" href="/Bookmarks/Index"> Revino la pagina principala</a>
+    </div>
 }
 
 

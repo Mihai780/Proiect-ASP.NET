@@ -2129,3 +2129,7 @@ C:\Users\mihai\OneDrive\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT
 C:\Users\mihai\OneDrive\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\AngleSharp.Css.dll
 C:\Users\mihai\OneDrive\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\HtmlSanitizer.dll
 C:\Users\mihai\OneDrive\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\System.Collections.Immutable.dll
+C:\Users\eduar\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\AngleSharp.dll
+C:\Users\eduar\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\AngleSharp.Css.dll
+C:\Users\eduar\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\HtmlSanitizer.dll
+C:\Users\eduar\Documents\GitHub\Proiect-ASP.NET\ASP_PROJECT\ASP_PROJECT\ASP PROJECT\bin\Debug\net6.0\System.Collections.Immutable.dll
