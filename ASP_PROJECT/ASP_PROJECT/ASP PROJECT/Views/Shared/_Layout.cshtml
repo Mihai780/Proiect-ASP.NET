@@ -29,10 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Bookmarks" asp-action="New">Create</a>
                         </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Afisare Categorii</a>
-                        </li>
+                        @if (User.IsInRole("User") || User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Afisare Categorii</a>
+                            </li>
+                        }
+                      
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
