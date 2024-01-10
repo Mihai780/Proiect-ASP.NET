@@ -61,7 +61,11 @@
 
         <br />
     }
-    <input type="hidden" name="newRole" value="@ViewBag.UserRole" />
+    else
+    {
+        <input type="hidden" name="newRole" value="@ViewBag.UserRole" />
+    }
+
 
     @Html.Label("ProfilePic", "Poza de Profil", new { @class = "" })
 
@@ -75,13 +79,19 @@
             <img id="imgPicture" style="width:300px;height:300px; object-fit:cover" src="">
         }
         <br />
+        <input type="file"
+               accept=".png,.jpg,.jpeg,.gif,.tif"
+               name="ProfilePic"
+               class="form-control"
+               style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;"
+               onchange="document.getElementById('imgPicture').src = window.URL.createObjectURL(this.files[0])" />
 
-    @Html.TextBoxFor(m=>m.ProfilePic, new {type="file",
+   @* @Html.TextBoxFor(m=>m.ProfilePic, new {type="file",
                            accept=".png,.jpg,.jpeg,.gif,.tif",
                            @class="form-control",
                            style="border:0px!important;padding: 0px;padding-top: 10px;padding-bottom: 30px;",
                            onchange="document.getElementById('imgPicture').src=window.URL.createObjectURL(this.files[0])}"})
-    
+        *@
 
     <br />
     @Html.ValidationMessageFor(m => m.ProfilePic, null, new { @class = "text-danger" })
