@@ -1,6 +1,6 @@
 ﻿<br />
 <br />
-@if (ViewBag.message != null)
+@if (TempData.ContainsKey("message"))
 {
     <h2 class=@TempData["messageType"]>@TempData["message"]</h2>
 }
