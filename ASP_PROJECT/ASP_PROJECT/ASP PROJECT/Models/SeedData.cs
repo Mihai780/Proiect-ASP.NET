@@ -3,7 +3,6 @@ using ASP_PROJECT.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-// PASUL 4 - useri si roluri
 
 namespace ASP_PROJECT.Models
 {
@@ -15,32 +14,22 @@ namespace ASP_PROJECT.Models
                 serviceProvider.GetRequiredService
                 <DbContextOptions<ApplicationDbContext>>()))
             {
-                // Verificam daca in baza de date exista cel putin un rol
-                // insemnand ca a fost rulat codul 
-                // De aceea facem return pentru a nu insera rolurile inca o data
-                // Acesta metoda trebuie sa se execute o singura data 
                 if (context.Roles.Any())
                 {
-                    return;   // baza de date contine deja roluri
+                    return;  
                 }
 
-                // CREAREA ROLURILOR IN BD
-                // daca nu contine roluri, acestea se vor crea
                 context.Roles.AddRange(
                     new IdentityRole { Id = "47991959-d03c-4c41-8938-83cf42af1067", Name = "Admin", NormalizedName = "Admin".ToUpper() },
                     new IdentityRole { Id = "47991959-d03c-4c41-8938-83cf42af1068", Name = "User", NormalizedName = "User".ToUpper() }
                 );
 
-                // o noua instanta pe care o vom utiliza pentru crearea parolelor utilizatorilor
-                // parolele sunt de tip hash
                 var hasher = new PasswordHasher<ApplicationUser>();
 
-                // CREAREA USERILOR IN BD
-                // Se creeaza cate un user pentru fiecare rol
                 context.Users.AddRange(
                     new ApplicationUser
                     {
-                        Id = "3ce4f0e3-2476-4092-9209-4cce498cefa1", // primary key
+                        Id = "3ce4f0e3-2476-4092-9209-4cce498cefa1", 
                         UserName = "admin@test.com",
                         EmailConfirmed = true,
                         NormalizedEmail = "ADMIN@TEST.COM",
@@ -51,7 +40,7 @@ namespace ASP_PROJECT.Models
                    
                     new ApplicationUser
                     {
-                        Id = "3ce4f0e3-2476-4092-9209-4cce498cefa2", // primary key
+                        Id = "3ce4f0e3-2476-4092-9209-4cce498cefa2", 
                         UserName = "user@test.com",
                         EmailConfirmed = true,
                         NormalizedEmail = "USER@TEST.COM",
@@ -61,7 +50,6 @@ namespace ASP_PROJECT.Models
                     }
                 );
 
-                // ASOCIEREA USER-ROLE
                 context.UserRoles.AddRange(
                     new IdentityUserRole<string>
                     {

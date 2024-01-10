@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-//REMINDER: Din ultima cerinta deducem ca adminul NU STERGE CATEGORIILE USERILOR
+
 namespace ASP_PROJECT.Controllers
 {
     public class CategoriesController : Controller

@@ -18,16 +18,12 @@ namespace ASP_PROJECT.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // definirea relatiei many-to-many dintre Article si Bookmark
 
             base.OnModelCreating(modelBuilder);
 
-            // definire primary key compus
             modelBuilder.Entity<BookmarkCategory>()
                 .HasKey(ab => new { ab.Id, ab.BookmarkId, ab.CategoryId });
 
-
-            // definire relatii cu modelele Bookmark si Article (FK)
 
             modelBuilder.Entity<BookmarkCategory>()
                 .HasOne(ab => ab.Bookmark)

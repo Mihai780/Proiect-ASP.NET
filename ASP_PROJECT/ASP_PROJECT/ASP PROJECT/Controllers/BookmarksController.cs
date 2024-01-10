@@ -380,7 +380,6 @@ namespace ASP_PROJECT.Controllers
         public ActionResult Delete(int id)
         {
             Bookmark bookmark = db.Bookmarks.Include("Comments")
-                                         //.Include("BookmarkCategory")
                                          .Where(bok => bok.Id == id)
                                          .First();
 
@@ -393,14 +392,6 @@ namespace ASP_PROJECT.Controllers
                         db.Comments.Remove(comment);
                     }
                 }
-
-               /* if (bookmark.BookmarkCategories.Count > 0)
-                {
-                    foreach (var bmc in bookmark.BookmarkCategories)
-                    {
-                        db.Comments.Remove(bmc);
-                    }
-                }*/
 
                 db.Bookmarks.Remove(bookmark);
                 db.SaveChanges();
