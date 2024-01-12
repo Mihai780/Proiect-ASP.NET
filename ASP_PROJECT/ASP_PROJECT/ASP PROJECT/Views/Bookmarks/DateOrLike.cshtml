@@ -2,6 +2,10 @@
 <br />
 <h2 class="text-center text-white lead" style="font-size:30px">@ViewBag.NumeSite</h2>
 <br />
+@{
+    ViewBag.Title = "Cautare Postari";
+}
+
 @foreach (ASP_PROJECT.Models.Bookmark bookmark in ViewBag.Bookmarks)
 {
     <a class="btn btn-success" href="/Bookmarks/Show/@bookmark.Id">
